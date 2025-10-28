@@ -11,13 +11,13 @@ As a user, I want to:
 6. View my balance summary to see how much I owe and others owe me
 
 ## Auth Routes
-POST /auth/signup
-POST /auth/signin
+- `POST /auth/signup`
+- `POST /auth/signin`
 
 ## Receipt Routes
-POST /receipts | Create new receipt
-GET /receipts | Get all my receipts
-GET /receipts/:id | Get a single receipt
-PUT /receipts/:id | Update receipt
-DELETE /receipts/:id | Delete Receipt
-GET /receipt/balance | Get balance summary
+- `POST /receipts` - Create new receipt
+- `GET /receipts` - Get all my receipts
+- `GET /receipts/:id` - Get a single receipt
+- `PUT /receipts/:id` - Update receipt
+- `DELETE /receipts/:id` - Delete Receipt
+- `GET /receipts/balance` - Get balance summary
