@@ -1,4 +1,4 @@
-const Users = require('../models/user'); 
+const User = require('../models/user'); 
 
 async function createUser(req,res){
     try{
@@ -35,12 +35,13 @@ async function updateUser(req,res){
         const user = await User.findByIdAndUpdate(
             req.params.id,
             req.body,
-            {new:true}
-        );
+            {new:true, runValidators: true}
+        ).select('-password');
 
         if (!user){
             return res.status(404).json({error: 'User not found'});
         }
+        return res.json(user);
     } catch (error){
         res.status(500).json({error: error.message});
     }

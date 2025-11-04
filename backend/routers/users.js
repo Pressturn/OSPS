@@ -5,7 +5,7 @@ const {createUser, getAllUsers, getSpecificUser, updateUser, deleteUser} = requi
 router.post('/', createUser);
 router.get('/', getAllUsers);
 router.get('/:id', getSpecificUser);
-router.update('/:id', updateUser);
+router.put('/:id', updateUser);
 router.delete('/:id', deleteUser);
 
 module.exports = router; 
