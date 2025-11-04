@@ -9,7 +9,7 @@ const app = express()
 connectDB()
 
 app.use(express.json())
-app.use(morgan);
+app.use(morgan('dev'));
 
 const PORT = process.env.PORT || "3000";
 

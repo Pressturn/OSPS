@@ -27,10 +27,10 @@ const userSchema = new mongoose.Schema({
         default: 0
     },
 
-    friends: {
+    friends: [{
         type: mongoose.Schema.Types.ObjectId,
         ref:'User'
-    }
+    }]
 })
 
 const User = mongoose.model('User', userSchema);
