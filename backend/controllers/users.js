@@ -11,7 +11,7 @@ async function createUser(req,res){
 
 async function getAllUsers (req,res){
     try{
-        const users = await User.find();
+        const users = await User.find().select('-password');
         return res.json(users); 
     } catch (error){
         res.status(500).json({error: error.message});
@@ -20,7 +20,7 @@ async function getAllUsers (req,res){
 
 async function getSpecificUser (req,res){
     try{
-        const user = await User.findById(req.params.id);
+        const user = await User.findById(req.params.id).select('-password');
         if(!user){
             return res.status(404).json({error: 'User not found'});
         }
@@ -37,6 +37,7 @@ async function updateUser(req,res){
             req.body,
             {new:true}
         );
+
         if (!user){
             return res.status(404).json({error: 'User not found'});
         }
