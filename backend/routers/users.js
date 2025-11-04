@@ -11,6 +11,7 @@ router.post('/', async (req,res) => {
     }
 });
 
+// Get all users
 router.get('/', async (req,res) => {
     try{
         const users = await User.find();
@@ -19,6 +20,35 @@ router.get('/', async (req,res) => {
         res.status(500).json({error: error.message});
     }
 })
+
+// Get specific user
+router.get('/:id', async (req,res) => {
+    try{
+        const user = await User.findById(req.params.id);
+        if(!user){
+            return res.status(404).json({error: 'User not found'});
+        }
+        return res.json(user); 
+    } catch (error){
+        res.status(500).json({error: error.message});
+    }
+});
+
+router.update('/:id', async(req,res) => {
+    try{
+        const user = await User.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {new:true}
+        );
+        if (!user){
+            return res.status(404).json({error: 'User not found'});
+        }
+    } catch (error){
+        res.status(500).json({error: error.message});
+    }
+});
+
 
 router.delete('/:id', async (req,res) => {
     try{
@@ -30,6 +60,6 @@ router.delete('/:id', async (req,res) => {
     } catch (error){
         res.status(500).json({error: error.message});
     }
-})
+});
 
 module.exports = router; 
