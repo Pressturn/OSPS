@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('../models/user');
 
-const expenseSchema = new moongoose.Schema({
+const expenseSchema = new mongoose.Schema({
     amount: {
         type: Number,
         required: [true, "Enter an expense"],
@@ -19,16 +19,18 @@ const expenseSchema = new moongoose.Schema({
         required: true
     },
 
-    splitBetween: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true
-    },
+    splitBetween: [{
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        },
+        amount: {
+            type: Number,
+            required: true
+        }
+    }],
+}, {timestamps: true});
 
-    howSplit: {
-
-    },
-
-    // timestamp
-
-})
+const Expense = mongoose.model('Expense', expenseSchema);
+module.exports = Expense; 
