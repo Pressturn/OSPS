@@ -67,7 +67,7 @@ const handleSubmit = async (e) => {
     return;
   }
 
-  if(formData <=0){
+  if(formData.total <=0){
     setError ('Total amount myust be >0');
     return;
   }

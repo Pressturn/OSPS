@@ -2,7 +2,7 @@ exports.getAllReceipts = async (req,res) => {
 
 }
 
-//get single receipt data
+//get single receipt by ID
 exports.getReceiptById = async (req, res) => {};
 
 //update receipts
