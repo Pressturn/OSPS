@@ -41,4 +41,39 @@ const signup = async (req, res) => {
     }
 }
 
-module.exports = { signup }
+const signin = async (req, res) => {
+    try {
+        const { email, password } = req.body
+
+        const user = await User.findOne({ email })
+        if (!user) {
+            return res.status(401).json({ error: 'Unable to log in' })
+        }
+
+        const isPasswordCorrect = await bcrypt.compare(password, user.password)
+        if (!isPasswordCorrect) {
+            return res.status(401).json({ error: 'Unable to log in' })
+        }
+
+        const token = jwt.sign(
+            { userId: user._id },
+            process.env.JWT_SECRET
+        )
+
+        res.status(200).json({
+            token,
+            user: {
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                balance: user.balance
+            }
+        })
+
+    } catch (error) {
+           console.log('Signin error:', error); 
+        res.status(500).json({ error: 'Signin Failed' })
+    }
+}
+
+module.exports = { signup, signin }
