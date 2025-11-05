@@ -1,13 +1,23 @@
 const express = require("express");
 const router = express.Router();
+const {
+    getAllReceipts,
+    getReceiptById,
+    updateReceipt,
+    deleteReceipt
+
+} = require('../controllers/receiptController');
 
 //get all receipts
-router.get("/receipts");
+router.get("/",getAllReceipts);
 
 //get single receipt y ID
-router.get("/receipts/:id");
+router.get("/:id", getReceiptById);
 
 //update receipt details
-router.put("/receipts/:id");
+router.put("/:id",updateReceipt);
+
+//delete receipt
+router.delete("/:id", deleteReceipt);
 
 module.exports = router;
