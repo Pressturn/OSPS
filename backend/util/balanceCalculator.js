@@ -1,16 +1,14 @@
 
-function calculateBalances (expenses){
+function calculateBalances(expenses) {
     const debts = {};
+    let balance = {};
 
     expenses.forEach(expense => {
-
-        balance = {};
-
-        expense.splitBetween.forEach(split =>{
+        expense.splitBetween.forEach(split => {
             const userId = split.user.toString();
             const amountPaid = (userId === expense.paidBy.toString()) ? expense.amount : 0;
-            const share = split.amount; 
-            balance[userId] = amountPaid - share; 
+            const share = split.amount;
+            balance[userId] = (balance[userId] || 0) + (amountPaid - share)
         })
 
     });
@@ -18,22 +16,23 @@ function calculateBalances (expenses){
     const allUserIds = Object.keys(balance);
 
     allUserIds.forEach(fromUser => {
-        if (balance[fromUser] <0){
+        if (balance[fromUser] < 0) {
 
             allUserIds.forEach(toUser => {
-                if(balance[toUser] > 0){
+                if (balance[toUser] > 0) {
 
                     const settleAmount = Math.min(
-                        Math.abs([balances[fromUser], balances[toUser]])
+                        Math.abs(balance[fromUser]),
+                        Math.abs(balance[toUser])
                     );
 
                     const debtKey = `${fromUser}-${toUser}`;
                     const oppositeKey = `${toUser}-${fromUser}`;
 
-                    if (debts[oppositeKey]){
+                    if (debts[oppositeKey]) {
                         debts[oppositeKey] -= settleAmount;
 
-                        if (debts[oppositeKey] < 0){
+                        if (debts[oppositeKey] < 0) {
                             debts[debtKey] = Math.abs(debts[oppositeKey]);
                             debts[oppositeKey] = 0;
                         };
@@ -42,21 +41,21 @@ function calculateBalances (expenses){
                         debts[debtKey] = (debts[debtKey] || 0) + settleAmount;
                     }
 
-                    balances[fromUser] += settleAmount;
-                    balances[toUser] -= settleAmount; 
+                    balance[fromUser] += settleAmount;
+                    balance[toUser] -= settleAmount;
                 }
             })
-        } 
+        }
     });
 
     const outstandingBalance = [];
 
-    for (const key in debts){
+    for (const key in debts) {
         const [from, to] = key.split('-');
-        if (debts[key] > 0){
+        if (debts[key] > 0) {
             outstandingBalance.push({
-                from: from, 
-                to: to, 
+                from: from,
+                to: to,
                 amount: debts[key]
             })
         }
@@ -67,4 +66,4 @@ function calculateBalances (expenses){
 
 };
 
-module.exports = {calculateBalances};
+module.exports = { calculateBalances };

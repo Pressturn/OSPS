@@ -8,6 +8,7 @@ const connectDB = require("./config/database.js");
 const userRouter = require('./routers/users.js')
 const expenseRouter = require('./routers/expense.js')
 const receiptRouter = require("./routers/receipts.js");
+const authRouter = require("./routers/auth.js")
 
 const app = express();
 connectDB();
@@ -22,6 +23,7 @@ app.use("/users", userRouter);
 app.use("/receipts", receiptRouter);
 app.use('/users', userRouter);
 app.use('/expenses', expenseRouter);
+app.use('/auth', authRouter)
 
 app.listen(PORT, () => {
   console.log(`The express app is ready on port ${PORT}`);
