@@ -1,4 +1,5 @@
 const Expense = require('../models/expense'); 
+const {calculateBalances} = require('../util/balanceCalculator')
 
 async function createExpense(req,res){
     try{
@@ -59,10 +60,27 @@ async function deleteExpense(req,res){
     }
 };
 
+
+async function testBalance(req, res) {
+    try {
+        const expenses = await Expense.find();
+        const result = calculateBalances(expenses);
+        
+        res.json({
+            message: 'Balance calculation successful!',
+            totalExpenses: expenses.length,
+            debts: result
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
 module.exports = {
     createExpense,
     getAllExpenses,
     getSpecificExpense,
     deleteExpense,
-    updateExpense
+    updateExpense,
+    testBalance
 };
