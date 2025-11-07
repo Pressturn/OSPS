@@ -80,29 +80,29 @@ async function getUserBalance(req, res) {
         const debtsThatUserIsOwed = allDebtsCalculated.filter(debt => debt.to === userId)
 
         //Calculate total
-        const totalAmountUserOwes = debtsThatUserOwes.reduce((sum, debt) => sum + debt.amoun, 0)
-        const totalAmountUserIsOwed = debtsThatUserIsOwed.reduce((sum, debt) => sum + debt.amount,0 )
-        const nettBalance = totalAmountUserIsOwed - totalAmountUserOwes
+        const totalYouOwe = debtsThatUserOwes.reduce((sum, debt) => sum + debt.amoun, 0)
+        const totalOthersOwesYou = debtsThatUserIsOwed.reduce((sum, debt) => sum + debt.amount, 0)
+        const nettBalance = totalYouOwe - totalOthersOwesYou
 
 
-        const listOfPeopleUserOwes = []
+        const youOwe = []
 
         for (let debt of debtsThatUserOwes) {
-            const personBeingOwed = await User.findById(debt.to).select('name')
-            listOfPeopleUserOwes.push({
-                owedTo: personBeingOwed.name,
-                owedToId: debt.to,
+            const person = await User.findById(debt.to).select('name')
+            youOwe.push({
+                name: person.name,
+                userId: debt.to,
                 amount: debt.amount
             })
         }
 
-        const listOfPeopleThatOwesThisUser = []
+        const owesYou = []
 
         for (let debt of debtsThatUserIsOwed) {
-            const personThatOwes = await User.findById(debt.from).select('name')
-            listOfPeopleThatOwesThisUser.push({
-                owedBy: personThatOwes.name,
-                owedToId: debt.from,
+            const person = await User.findById(debt.from).select('name')
+            owesYou.push({
+                name: person.name,
+                userId: debt.from,
                 amount: debt.amount
             })
         }
@@ -110,9 +110,11 @@ async function getUserBalance(req, res) {
         res.json({
             userId: userFromDatabase._id,
             userName: userFromDatabase.name,
+            totalYouOwe: totalYouOwe,
+            totalOthersOwesYou: totalOthersOwesYou,
             nettBalance: nettBalance,
-            owed: listOfPeopleUserOwes,
-            isOwed: listOfPeopleThatOwesThisUser
+            youOwe: youOwe,
+            owesYou: owesYou
         })
 
     } catch (error) {
