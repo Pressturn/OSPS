@@ -80,8 +80,8 @@ async function getUserBalance(req, res) {
         const debtsThatUserIsOwed = allDebtsCalculated.filter(debt => debt.to === userId)
 
         //Calculate total
-        const totalAmountUserOwes = debtsThatUserOwes.reduce((sum, debt) => sum + debt.amount)
-        const totalAmountUserIsOwed = debtsThatUserIsOwed.reduce((sum, debt) => sum + debt.amount)
+        const totalAmountUserOwes = debtsThatUserOwes.reduce((sum, debt) => sum + debt.amoun, 0)
+        const totalAmountUserIsOwed = debtsThatUserIsOwed.reduce((sum, debt) => sum + debt.amount,0 )
         const nettBalance = totalAmountUserIsOwed - totalAmountUserOwes
 
 
