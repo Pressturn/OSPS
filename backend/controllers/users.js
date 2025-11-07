@@ -1,6 +1,5 @@
 const User = require('../models/user');
-const Expense = require('../models/expense')
-const { calculateBalances } = require('../util/balanceCalculator')
+const { getUserBalanceSummary } = require('../services/balanceSummary')
 
 async function createUser(req, res) {
     try {
@@ -63,58 +62,23 @@ async function deleteUser(req, res) {
 
 async function getUserBalance(req, res) {
     try {
-
-        // Get User
         const userId = req.params.id
         const userFromDatabase = await User.findById(userId)
+
         if (!userFromDatabase) {
             return res.status(404).json({ error: 'User not found' })
         }
 
-        // Calculate all debts
-        const allExpensesFromDatabase = await Expense.find()
-        const allDebtsCalculated = calculateBalances(allExpensesFromDatabase)
-
-        // Filter this user
-        const debtsThatUserOwes = allDebtsCalculated.filter(debt => debt.from === userId)
-        const debtsThatUserIsOwed = allDebtsCalculated.filter(debt => debt.to === userId)
-
-        //Calculate total
-        const totalYouOwe = debtsThatUserOwes.reduce((sum, debt) => sum + debt.amoun, 0)
-        const totalOthersOwesYou = debtsThatUserIsOwed.reduce((sum, debt) => sum + debt.amount, 0)
-        const nettBalance = totalYouOwe - totalOthersOwesYou
-
-
-        const youOwe = []
-
-        for (let debt of debtsThatUserOwes) {
-            const person = await User.findById(debt.to).select('name')
-            youOwe.push({
-                name: person.name,
-                userId: debt.to,
-                amount: debt.amount
-            })
-        }
-
-        const owesYou = []
-
-        for (let debt of debtsThatUserIsOwed) {
-            const person = await User.findById(debt.from).select('name')
-            owesYou.push({
-                name: person.name,
-                userId: debt.from,
-                amount: debt.amount
-            })
-        }
+        const balanceSummary = await getUserBalanceSummary(userId)
 
         res.json({
             userId: userFromDatabase._id,
             userName: userFromDatabase.name,
-            totalYouOwe: totalYouOwe,
-            totalOthersOwesYou: totalOthersOwesYou,
-            nettBalance: nettBalance,
-            youOwe: youOwe,
-            owesYou: owesYou
+            totalYouOwe: balanceSummary.totalYouOwe,
+            totalOthersOwesYou: balanceSummary.totalOthersOwesYou,
+            nettBalance: balanceSummary.nettBalance,
+            youOwe: balanceSummary.youOwe,
+            owesYou: balanceSummary.owesYou
         })
 
     } catch (error) {
