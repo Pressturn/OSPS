@@ -16,7 +16,7 @@ exports.getAllReceipts = async (req, res) => {
 //get single receipt by ID
 exports.getReceiptById = async (req, res) => {
     try{
-        const receipt = await Expense.findById(req.params.id).populate('paidBy', 'name').populate('splitBetween','name');
+        const receipt = await Expense.findById(req.params.id).populate('paidBy', 'name').populate('splitBetween.user','name');
         if(!receipt) {
             return res.status(404).json({error: "receipt not found"})
         }
