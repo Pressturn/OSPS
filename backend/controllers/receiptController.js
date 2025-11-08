@@ -1,6 +1,15 @@
 //import the expense model
 const Expense = require("../models/expense");
 
+exports.createReceipt = async (req, res) => {
+  try {
+    const newReceipt = await Expense.create(req.body);
+    return res.status(201).json(newReceipt);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 exports.getAllReceipts = async (req, res) => {
   try {
     const receipts = await Expense.find()
