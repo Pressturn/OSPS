@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const { getUserBalanceSummary } = require('../services/balanceSummary')
 
+// Still allows for multiple users to have the same email
 async function createUser(req, res) {
     try {
         const newUser = await User.create(req.body);

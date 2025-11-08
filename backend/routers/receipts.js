@@ -4,12 +4,18 @@ const {
     getAllReceipts,
     getReceiptById,
     updateReceipt,
-    deleteReceipt
-
+    deleteReceipt,
+    createReceipt,
+    testBalance
 } = require('../controllers/receiptController');
+
+router.post("/", createReceipt);
 
 //get all receipts
 router.get("/",getAllReceipts);
+
+//test balance calculation
+router.get("/test/balance", testBalance);
 
 //get single receipt y ID
 router.get("/:id", getReceiptById);

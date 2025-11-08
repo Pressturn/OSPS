@@ -21,8 +21,6 @@ const PORT = process.env.PORT || "3000";
 // Routes
 app.use("/users", userRouter);
 app.use("/receipts", receiptRouter);
-app.use('/users', userRouter);
-app.use('/expenses', expenseRouter);
 app.use('/auth', authRouter)
 
 app.listen(PORT, () => {
