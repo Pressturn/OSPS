@@ -4,7 +4,7 @@ import NavBar from "./components/NavBar.jsx";
 import ReceiptList from "./components/AllReceiptsPage/ReceiptList";
 import SingleReceiptDetail from "./components/ViewSingleReceipt/SingleReceiptDetail";
 import ReceiptForm from "./components/EditReceiptPage/ReceiptForm";
-
+import './App.css';
 
 function App() {
   return (

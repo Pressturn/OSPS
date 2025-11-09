@@ -1,7 +1,7 @@
 //jon
 
 import axios from "axios";
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = "http://localhost:3000";
 
 //axios configuration
 const api = axios.create({
