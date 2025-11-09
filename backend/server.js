@@ -6,7 +6,6 @@ const connectDB = require("./config/database.js");
 
 // Import Routers
 const userRouter = require('./routers/users.js')
-const expenseRouter = require('./routers/expense.js')
 const receiptRouter = require("./routers/receipts.js");
 const authRouter = require("./routers/auth.js")
 
