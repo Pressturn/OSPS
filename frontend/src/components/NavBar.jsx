@@ -15,9 +15,11 @@ return (
         <Link to="/create">Create New Receipt</Link>
         <Link to="/receipts">View All Receipts</Link>
         <Link to="/groups">Groups</Link>
-        <Link to="dashboard">View My Balance Summary</Link>
+        <Link to="/dashboard">View My Balance Summary</Link>
         <button onClick={handleLogout}>Logout</button>
       </div>
     </div>
   </nav>
 );
+
+export default NavBar;
