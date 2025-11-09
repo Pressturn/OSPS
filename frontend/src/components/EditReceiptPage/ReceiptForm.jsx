@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  getReceiptById,
-  updateReceipt,
-} from "../../services/receiptService";
+import { getReceiptById, updateReceipt } from "../../services/receiptService";
 
 const ReceiptForm = () => {
   const { id } = useParams();
@@ -13,16 +10,13 @@ const ReceiptForm = () => {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
 
-
   const [formData, setFormData] = useState({
     description: "",
-    total: "",
-    date: "",
-    paidBy: "",
+    amount: "",
   });
 
   //have a state so that we can track whats the original
-  const [orignalReceipt, setOriginalReceipt] = useState(null);
+  const [originalReceipt, setOriginalReceipt] = useState(null);
 
   useEffect(() => {
     fetchReceipt();
@@ -36,10 +30,8 @@ const ReceiptForm = () => {
 
       //FILL UP THE FORM WITH existing receipt data
       setFormData({
-        description: receipt.description,
-        total: receipt.total,
-        date: receipt.date,
-        paidBy: receipt.paidBy,
+        description: receipt.description || "",
+        amount: receipt.amount || "",
       });
 
       setError(null);
@@ -62,13 +54,13 @@ const ReceiptForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.description || !formData.total) {
-      setError('Please fill in all required fields');
+    if (!formData.description || !formData.amount) {
+      setError("Please fill in all required fields");
       return;
     }
 
-    if (formData.total <= 0) {
-      setError('Total amount myust be >0');
+    if (formData.amount <= 0) {
+      setError("Amount must be greater than 0");
       return;
     }
 
@@ -118,17 +110,17 @@ Date */}
             required
           />
         </div>
-        {/* 
-    Cancel button */}
+
         <div>
-          <button
-            type='button'
-            onClick={handleCancel}
-            disabled={loading}></button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Updating..." : "Update Receipt"}
+          </button>
+          <button type="button" onClick={handleCancel} disabled={loading}>
+            Cancel
+          </button>
         </div>
       </form>
-    </>
-  )
-}
-
+    </div>
+  );
+};
 export default ReceiptForm;

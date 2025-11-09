@@ -9,7 +9,6 @@ const ReceiptList = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-
   useEffect(() => {
     fetchReceipts();
   }, []);
@@ -28,8 +27,12 @@ const ReceiptList = () => {
     }
   };
 
+  const handleReceiptClick = (receiptId) => {
+    navigate(`/receipts/${receiptId}`);
+  };
+
   if (loading) {
-    return <div>Loading receipt...</div>;
+    return <div>Loading receipts...</div>;
   }
 
   if (error) {
