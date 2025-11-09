@@ -54,6 +54,7 @@ const ReceiptForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
     if (!formData.description || !formData.amount) {
       setError("Please fill in all required fields");
       return;
@@ -64,11 +65,26 @@ const ReceiptForm = () => {
       return;
     }
 
-    try {
+  try {
       setLoading(true);
       setError(null);
+
+      await updateReceipt(id, formData);
+
+      setSuccessMessage("Receipt updated successfully!");
+      setTimeout(() => {
+        navigate(`/receipts/${id}`);
+      }, 1500);
+    } catch (err) {
+      setError("Failed to update receipt");
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
-    catch { }
+  };
+
+   const handleCancel = () => {
+    navigate(`/receipts/${id}`);
   };
 
   return (
@@ -92,25 +108,16 @@ Description of expense */}
 Total amount */}
         <div>
           <label> Total Amount ($) </label>
-          <input
-            type='number'
-            value={formData.total}
-            onChange={handleInputChange}
-            required
-          />
+              <input
+      type='number'
+      id='amount'
+      name='amount'
+      value={formData.amount}
+      onChange={handleInputChange}
+      required
+    />
         </div>
-        {/* 
-Date */}
-        <div>
-          <label> Date </label>
-          <input
-            type='date'
-            value={formData.date}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-
+        
         <div>
           <button type="submit" disabled={loading}>
             {loading ? "Updating..." : "Update Receipt"}
