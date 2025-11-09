@@ -31,8 +31,7 @@ const signup = async (req, res) => {
                 user: {
                     id: newUser._id,
                     name: newUser.name,
-                    email: newUser.email,
-                    balance: newUser.Balance
+                    email: newUser.email
                 }
             })
 
@@ -65,8 +64,7 @@ const signin = async (req, res) => {
             user: {
                 _id: user._id,
                 name: user.name,
-                email: user.email,
-                balance: user.balance
+                email: user.email
             }
         })
 
