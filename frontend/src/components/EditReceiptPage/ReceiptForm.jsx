@@ -67,58 +67,45 @@ const ReceiptForm = () => {
     try {
       setLoading(true);
       setError(null);
-
-      await updateReceipt(id, formData);
-
-      setSuccessMessage("Receipt updated successfully!");
-      setTimeout(() => {
-        navigate(`/receipts/${id}`);
-      }, 1500);
-    } catch (err) {
-      setError("Failed to update receipt");
-      console.error(err);
-    } finally {
-      setLoading(false);
     }
+    catch { }
   };
-
-  const handleCancel = () => {
-    navigate(`/receipts/${id}`);
-  };
-
-  if (loading && !originalReceipt) {
-    return <div>Loading receipt...</div>;
-  }
 
   return (
-    <div>
+    <>
       <h1>Edit Receipt</h1>
       <p>Update your receipt details below</p>
-
-      {error && <div style={{ color: "red" }}>{error}</div>}
-      {successMessage && <div style={{ color: "green" }}>{successMessage}</div>}
-
       <form onSubmit={handleSubmit}>
+        {/* 
+Description of expense */}
         <div>
-          <label htmlFor="description">Description</label>
+          <label>Description</label>
           <input
-            type="text"
-            id="description"
-            name="description"
+            type='text'
+            id='description'
+            name='description'
             value={formData.description}
+            onChange={handleInputChange}
+            required></input>
+        </div>
+        {/* 
+Total amount */}
+        <div>
+          <label> Total Amount ($) </label>
+          <input
+            type='number'
+            value={formData.total}
             onChange={handleInputChange}
             required
           />
         </div>
-
+        {/* 
+Date */}
         <div>
-          <label htmlFor="amount">Total Amount ($)</label>
+          <label> Date </label>
           <input
-            type="number"
-            id="amount"
-            name="amount"
-            step="0.01"
-            value={formData.amount}
+            type='date'
+            value={formData.date}
             onChange={handleInputChange}
             required
           />

@@ -40,38 +40,30 @@ const ReceiptList = () => {
   }
 
   return (
-    <div>
-      <h1>All Receipts</h1>
-      <p>{receipts.length} receipts found</p>
+    <>
+      <div>
+        <h1>All Receipts</h1>
+        <p>{receipts.length} receipts found</p>
 
-      {receipts.length === 0 ? (
-        <p>No receipts found. Start by creating one.</p>
-      ) : (
-        <div>
-          {receipts.map((receipt) => (
-            <div
-              key={receipt._id}
-              onClick={() => handleReceiptClick(receipt._id)}
-              style={{
-                cursor: "pointer",
-                border: "1px solid #ccc",
-              }}
-            >
-              <p>
-                <strong>Description:</strong> {receipt.description}
-              </p>
-              <p>
-                <strong>Amount:</strong> ${receipt.amount?.toFixed(2)}
-              </p>
-              <p>
-                <strong>Paid By:</strong> {receipt.paidBy?.name}
-              </p>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
+        {receipts.length === 0 ? (
+          <p>No receipts found. Start by creating one.</p>
+        ) : (
+          <div>
+            {receipts.map((receipt) => (
+              <div
+                key={receipt._id}
+                onClick={() => handleReceiptClick(receipt._id)}
+              >
+                <h2>{receipt.title}</h2>
+                <p>{receipt.description}</p>
+                <p>Paid By: {receipt.paidBy?.name}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
+  )
+}
 
 export default ReceiptList;
