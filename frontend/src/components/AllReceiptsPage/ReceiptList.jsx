@@ -54,7 +54,6 @@ const ReceiptList = () => {
                 key={receipt._id}
                 onClick={() => handleReceiptClick(receipt._id)}
               >
-                <h2>{receipt.title}</h2>
                 <p>{receipt.description}</p>
                 <p>Paid By: {receipt.paidBy?.name}</p>
               </div>
@@ -63,7 +62,7 @@ const ReceiptList = () => {
         )}
       </div>
     </>
-  )
-}
+  );
+};
 
 export default ReceiptList;
