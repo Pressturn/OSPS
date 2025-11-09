@@ -6,7 +6,11 @@ const {
   getReceiptById,
   updateReceipt,
   deleteReceipt,
+  testBalance
 } = require("../controllers/receiptController");
+
+
+router.post("/", createReceipt);
 
 //get all receipts
 router.get("/",getAllReceipts);

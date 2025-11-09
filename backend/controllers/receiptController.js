@@ -1,5 +1,25 @@
 //import the expense model
 const Expense = require("../models/expense");
+const {calculateBalances} = require('../util/balanceCalculator');
+
+exports.createReceipt = async (req,res) => {
+  try {
+    const newReceipt = await Expense.create(req.body);
+    return res.status(201).json(newReceipt);
+    } catch (error){
+        res.status(400).json({error: error.message});
+    }
+};
+
+
+exports.createReceipt = async (req, res) => {
+  try {
+    const newReceipt = await Expense.create(req.body);
+    return res.status(201).json(newReceipt);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 exports.createReceipt = async (req, res) => {
   try {
@@ -65,6 +85,22 @@ exports.deleteReceipt = async (req, res) => {
     }
 
     res.status(200).json({ message: "Receipt deleted succesfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+//test balance calculation
+exports.testBalance = async (req, res) => {
+  try {
+    const expenses = await Expense.find();
+    const result = calculateBalances(expenses);
+
+    res.json({
+      message: 'Balance calculation successful!',
+      totalExpenses: expenses.length,
+      debts: result
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

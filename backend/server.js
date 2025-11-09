@@ -6,7 +6,6 @@ const connectDB = require("./config/database.js");
 
 // Import Routers
 const userRouter = require('./routers/users.js')
-const expenseRouter = require('./routers/expense.js')
 const receiptRouter = require("./routers/receipts.js");
 const authRouter = require("./routers/auth.js")
 
@@ -21,8 +20,6 @@ const PORT = process.env.PORT || "3000";
 // Routes
 app.use("/users", userRouter);
 app.use("/receipts", receiptRouter);
-app.use('/users', userRouter);
-app.use('/expenses', expenseRouter);
 app.use('/auth', authRouter)
 
 app.listen(PORT, () => {
