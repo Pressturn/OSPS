@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const {
-    getAllReceipts,
-    getReceiptById,
-    updateReceipt,
-    deleteReceipt,
-    createReceipt,
-    testBalance
-} = require('../controllers/receiptController');
+  createReceipt,
+  getAllReceipts,
+  getReceiptById,
+  updateReceipt,
+  deleteReceipt,
+  testBalance
+} = require("../controllers/receiptController");
 
 
 router.post("/", createReceipt);
@@ -15,8 +15,6 @@ router.post("/", createReceipt);
 //get all receipts
 router.get("/",getAllReceipts);
 
-//test balance calculation
-router.get("/test/balance", testBalance);
 //create receipt
 router.post("/", createReceipt);
 
