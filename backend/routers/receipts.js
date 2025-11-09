@@ -9,6 +9,7 @@ const {
     testBalance
 } = require('../controllers/receiptController');
 
+
 router.post("/", createReceipt);
 
 //get all receipts
@@ -16,6 +17,8 @@ router.get("/",getAllReceipts);
 
 //test balance calculation
 router.get("/test/balance", testBalance);
+//create receipt
+router.post("/", createReceipt);
 
 //get single receipt y ID
 router.get("/:id", getReceiptById);
