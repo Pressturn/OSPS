@@ -2,15 +2,6 @@
 const Expense = require("../models/expense");
 const {calculateBalances} = require('../util/balanceCalculator');
 
-exports.createReceipt = async (req,res) => {
-  try {
-    const newReceipt = await Expense.create(req.body);
-    return res.status(201).json(newReceipt);
-    } catch (error){
-        res.status(400).json({error: error.message});
-    }
-};
-
 
 exports.createReceipt = async (req, res) => {
   try {
