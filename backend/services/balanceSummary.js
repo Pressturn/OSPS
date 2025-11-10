@@ -16,7 +16,7 @@ async function getUserBalanceSummary(userId) {
     //Calculate total
     const totalYouOwe = debtsThatUserOwes.reduce((sum, debt) => sum + debt.amount, 0)
     const totalOthersOwesYou = debtsThatUserIsOwed.reduce((sum, debt) => sum + debt.amount, 0)
-    const nettBalance = totalYouOwe - totalOthersOwesYou
+    const nettBalance = totalOthersOwesYou - totalYouOwe
 
 
     const youOwe = []
