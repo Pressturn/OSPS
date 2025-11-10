@@ -69,9 +69,17 @@ const signin = async (req, res) => {
         })
 
     } catch (error) {
-           console.log('Signin error:', error); 
+        console.log('Signin error:', error);
         res.status(500).json({ error: 'Signin Failed' })
     }
 }
 
-module.exports = { signup, signin }
+const signout = async (req, res) => {
+    try {
+        res.status(200).json({ message: "Signed Out" })
+    } catch (error) {
+        res.status(500).json({ error: 'Unable to Sign Out' })
+    }
+}
+
+module.exports = { signup, signin, signout}
