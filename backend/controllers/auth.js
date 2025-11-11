@@ -4,7 +4,7 @@ const User = require('../models/user.js')
 
 const saltRounds = 10
 
-const signup = async (req, res) => {
+const signUp = async (req, res) => {
     try {
         const { name, email, password } = req.body
 
@@ -40,7 +40,7 @@ const signup = async (req, res) => {
     }
 }
 
-const signin = async (req, res) => {
+const signIn = async (req, res) => {
     try {
         const { email, password } = req.body
 
@@ -74,7 +74,7 @@ const signin = async (req, res) => {
     }
 }
 
-const signout = async (req, res) => {
+const signOut = async (req, res) => {
     try {
         res.status(200).json({ message: "Signed Out" })
     } catch (error) {
@@ -82,4 +82,4 @@ const signout = async (req, res) => {
     }
 }
 
-module.exports = { signup, signin, signout}
+module.exports = { signUp, signIn, signOut}
