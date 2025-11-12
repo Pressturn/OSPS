@@ -6,22 +6,22 @@ const {
   getReceiptById,
   updateReceipt,
   deleteReceipt,
-  testBalance
+  
 } = require("../controllers/receiptController");
 
 //get all receipts
-router.get("/",getAllReceipts);
+router.get("/", verifyToken, getAllReceipts);
 
 //create receipt
-router.post("/", createReceipt);
+router.post("/", verifyToken, createReceipt);
 
 //get single receipt y ID
-router.get("/:id", getReceiptById);
+router.get("/:id", verifyToken, getReceiptById);
 
 //update receipt details
-router.put("/:id",updateReceipt);
+router.put("/:id", verifyToken, updateReceipt);
 
 //delete receipt
-router.delete("/:id", deleteReceipt);
+router.delete("/:id", verifyToken, deleteReceipt);
 
 module.exports = router;
