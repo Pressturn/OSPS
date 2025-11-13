@@ -66,19 +66,23 @@ exports.updateReceipt = async (req, res) => {
   try {
     const userId = req.user.userId;
 
-    const receipt = await Expense.findByIdAndUpdate(
-      req.params.id, //receipt id from the url
-      req.body, // data sent by the client
-      { new: true, runValidators: true } //new. = true is the updated document
-    );
+    const receipt = await Expense.findById(req.params.id)
 
     if (!receipt) {
       return res.status(404).json({ error: "Receipt not found" });
     }
 
-    const isAuthorised
+    if (receipt.paidBy.toString() !== userId) {
+      return res.status(403).json({ error: "Not authorised to update this receipt" })
+    }
 
-    res.status(200).json(receipt);
+    const updatedReceipt = await Expense.findByIdAndUpdate(
+      req.params.id, //receipt id from the url
+      req.body, // data sent by the client
+      { new: true, runValidators: true } //new. = true is the updated document
+    );
+
+    res.status(200).json(updatedReceipt);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -89,11 +93,17 @@ exports.deleteReceipt = async (req, res) => {
   try {
     const userId = req.user.userId;
 
-    const receipt = await Expense.findByIdAndDelete(req.params.id);
+    const receipt = await Expense.findById(req.params.id)
 
     if (!receipt) {
-      return res.status(404).json({ error: "receipt not found" });
+      return res.status(404).json({ error: "Receipt not found" })
     }
+
+    if (receipt.paidBy.toString() !== userId) {
+      return res.status(403).json({ error: "Not authorised to delete this receipt" })
+    }
+
+    await Expense.findByIdAndDelete(req.params.id);
 
     res.status(200).json({ message: "Receipt deleted succesfully" });
   } catch (error) {
