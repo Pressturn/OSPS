@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllReceipts } from "../../services/receiptService";
 import "./ReceiptList.css";
@@ -16,6 +16,7 @@ const ReceiptList = () => {
   const fetchReceipts = async () => {
     try {
       setLoading(true);
+      //get all receipts and store them
       const data = await getAllReceipts();
       setReceipts(data);
       setError(null);
@@ -27,6 +28,7 @@ const ReceiptList = () => {
     }
   };
 
+  //when a receipt is clicked, navigate there
   const handleReceiptClick = (receiptId) => {
     navigate(`/receipts/${receiptId}`);
   };

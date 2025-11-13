@@ -15,7 +15,7 @@ const ReceiptForm = () => {
     amount: "",
   });
 
-  //have a state so that we can track whats the original
+  //have a state so that we can track whats the original receipt after edit
   const [originalReceipt, setOriginalReceipt] = useState(null);
 
   useEffect(() => {
@@ -25,6 +25,7 @@ const ReceiptForm = () => {
   const fetchReceipt = async () => {
     try {
       setLoading(true);
+      //fetch receipt by ID from mongoDB backend
       const receipt = await getReceiptById(id);
       setOriginalReceipt(receipt);
 
@@ -44,7 +45,9 @@ const ReceiptForm = () => {
   };
 
   const handleInputChange = (e) => {
+    //update form with whatever user types in field
     const { name, value } = e.target;
+    //only change the field that you updated
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -69,9 +72,11 @@ const ReceiptForm = () => {
       setLoading(true);
       setError(null);
 
+      //call the backend to update receipt
       await updateReceipt(id, formData);
 
       setSuccessMessage("Receipt updated successfully!");
+      //navigate back to reeipte detail page after 1.5s
       setTimeout(() => {
         navigate(`/receipts/${id}`);
       }, 1500);
