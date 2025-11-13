@@ -6,8 +6,9 @@ const {
   getReceiptById,
   updateReceipt,
   deleteReceipt,
-  
+
 } = require("../controllers/receiptController");
+const verifyToken = require('../middleware/verifyToken')
 
 //get all receipts
 router.get("/", verifyToken, getAllReceipts);
