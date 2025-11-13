@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+//what every expense document should have
 const expenseSchema = new mongoose.Schema({
     amount: {
         type: Number,
