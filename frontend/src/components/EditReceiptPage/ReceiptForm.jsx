@@ -65,7 +65,7 @@ const ReceiptForm = () => {
       return;
     }
 
-  try {
+    try {
       setLoading(true);
       setError(null);
 
@@ -83,7 +83,7 @@ const ReceiptForm = () => {
     }
   };
 
-   const handleCancel = () => {
+  const handleCancel = () => {
     navigate(`/receipts/${id}`);
   };
 
@@ -108,16 +108,16 @@ Description of expense */}
 Total amount */}
         <div>
           <label> Total Amount ($) </label>
-              <input
-      type='number'
-      id='amount'
-      name='amount'
-      value={formData.amount}
-      onChange={handleInputChange}
-      required
-    />
+          <input
+            type='number'
+            id='amount'
+            name='amount'
+            value={formData.amount}
+            onChange={handleInputChange}
+            required
+          />
         </div>
-        
+
         <div>
           <button type="submit" disabled={loading}>
             {loading ? "Updating..." : "Update Receipt"}
@@ -127,7 +127,7 @@ Total amount */}
           </button>
         </div>
       </form>
-    </div>
+    </>
   );
 };
 export default ReceiptForm;
