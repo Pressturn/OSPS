@@ -6,7 +6,7 @@ const {
   getReceiptById,
   updateReceipt,
   deleteReceipt,
-
+  getBalanceSummary
 } = require("../controllers/receiptController");
 const verifyToken = require('../middleware/verifyToken')
 
@@ -16,6 +16,8 @@ router.get("/", verifyToken, getAllReceipts);
 //create receipt
 router.post("/", verifyToken, createReceipt);
 
+router.get('/balance', verifyToken, getBalanceSummary)
+
 //get single receipt y ID
 router.get("/:id", verifyToken, getReceiptById);
 
@@ -24,5 +26,6 @@ router.put("/:id", verifyToken, updateReceipt);
 
 //delete receipt
 router.delete("/:id", verifyToken, deleteReceipt);
+
 
 module.exports = router;
