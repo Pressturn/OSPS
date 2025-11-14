@@ -6,7 +6,12 @@ const { calculateBalances } = require('../util/balanceCalculator')
 async function getUserBalanceSummary(userId) {
 
     // Calculate expenses and debts
-    const allExpensesFromDatabase = await Expense.find()
+    const allExpensesFromDatabase = await Expense.find({
+        $or: [
+            { paidBy: userId },
+            { 'splitBetween.user': userId }
+        ]
+    })
     const allDebtsCalculated = calculateBalances(allExpensesFromDatabase)
 
     // Filter debts for this user

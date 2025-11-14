@@ -11,6 +11,8 @@ async function createUser(req, res) {
     }
 };
 
+
+
 async function getAllUsers(req, res) {
     try {
         const users = await User.find().select('-password');

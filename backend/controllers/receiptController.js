@@ -1,5 +1,7 @@
 //import the expense model
 const Expense = require("../models/expense");
+const { calculateBalances } = require('../util/balanceCalculator');
+const { getUserBalanceSummary } = require('../services/balanceSummary');
 const { calculateBalances } = require("../util/balanceCalculator");
 
 //function to create new receipts
@@ -147,3 +149,13 @@ exports.testBalance = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.getBalanceSummary = async (req, res) => {
+  try {
+    const userId = req.user.userId
+    const summary = await getUserBalanceSummary(userId)
+    res.json(summary)
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+}

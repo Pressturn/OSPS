@@ -86,7 +86,7 @@ const ReceiptForm = () => {
     }
   };
 
-   const handleCancel = () => {
+  const handleCancel = () => {
     navigate(`/receipts/${id}`);
   };
 
@@ -133,7 +133,7 @@ Total amount */}
           </button>
         </div>
       </form>
-    </div>
+    </>
   );
 };
 export default ReceiptForm;
