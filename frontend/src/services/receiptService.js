@@ -1,7 +1,7 @@
 //jon
 
 import axios from "axios";
-const BASE_URL = "https://osps-backend.onrender.com";
+const BASE_URL = "http://localhost:3000";
 
 //axios configuration
 const api = axios.create({
@@ -20,7 +20,7 @@ const getAuthHeaders = () => {
 };
 
 //get all the receipts created
-export const getAllReceipts = async () => {
+const getAllReceipts = async () => {
   try {
     const response = await api.get("/receipts");
     return response.data;
@@ -31,7 +31,7 @@ export const getAllReceipts = async () => {
 };
 
 //get a single receipt by ID
-export const getReceiptById = async (id) => {
+const getReceiptById = async (id) => {
   try {
     const response = await api.get(`/receipts/${id}`);
     return response.data;
@@ -42,7 +42,7 @@ export const getReceiptById = async (id) => {
 };
 
 //update or edit an existing receipt
-export const updateReceipt = async (id, receiptData) => {
+const updateReceipt = async (id, receiptData) => {
   try {
     const response = await api.put(`/receipts/${id}`, receiptData);
     return response.data;
@@ -53,7 +53,7 @@ export const updateReceipt = async (id, receiptData) => {
 };
 
 //delete receipt
-export const deleteReceipt = async (id) => {
+const deleteReceipt = async (id) => {
   try {
     const response = await api.delete(`/receipts/${id}`);
     return response.data;
@@ -62,3 +62,11 @@ export const deleteReceipt = async (id) => {
     throw error;
   }
 };
+
+export default {
+  getAllReceipts,
+  getReceiptById,
+  updateReceipt,
+  deleteReceipt,
+  getUserBalance,
+}
