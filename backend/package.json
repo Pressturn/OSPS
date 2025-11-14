@@ -7,8 +7,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.19.2",
     "morgan": "^1.10.1",
-    "nodemon": "^3.1.10",
-    "serverless-http": "^4.0.0"
+    "nodemon": "^3.1.10"
   },
   "name": "osps-be",
   "version": "1.0.0",
