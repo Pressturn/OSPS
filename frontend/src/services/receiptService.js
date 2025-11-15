@@ -63,10 +63,9 @@ const deleteReceipt = async (id) => {
   }
 };
 
-export default {
+export {
   getAllReceipts,
   getReceiptById,
   updateReceipt,
   deleteReceipt,
-  getUserBalance,
 }
