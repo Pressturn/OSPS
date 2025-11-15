@@ -2,7 +2,6 @@
 const Expense = require("../models/expense");
 const { calculateBalances } = require('../util/balanceCalculator');
 const { getUserBalanceSummary } = require('../services/balanceSummary');
-const { calculateBalances } = require("../util/balanceCalculator");
 
 //function to create new receipts
 exports.createReceipt = async (req, res) => {
