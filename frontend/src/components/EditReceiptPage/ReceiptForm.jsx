@@ -133,7 +133,7 @@ Total amount */}
           </button>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 export default ReceiptForm;
