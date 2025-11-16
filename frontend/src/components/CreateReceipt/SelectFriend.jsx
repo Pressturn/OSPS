@@ -1,6 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
-import axios, { all } from 'axios';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function SelectFriend() {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ function SelectFriend() {
   const [filteredUsers, setFilteredUsers] = useState([]);
 
 
-  // Get all users data 
+  // Get all users data
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -22,7 +23,6 @@ function SelectFriend() {
       setAllUsers(response.data);
 
     } catch (error) {
-      setError('Fail to load users');
       console.error(error);
     }
   };
@@ -51,7 +51,7 @@ function SelectFriend() {
       setInput("");
 
       // !!Would need to update
-      navigate("/receipts/new/details", { state: { selectedFriends: addFriend} });
+      navigate("/receipts/new/details", { state: { selectedFriends: newUser } });
     }
   }
   
@@ -59,8 +59,49 @@ function SelectFriend() {
   const getUserName = (email) => allUsers.find(user => user.email === email)?.name || email;
 
   return (
-    <div>AddUser</div>
+    <div>
+      <h1>Add an expense</h1>
+      <p>With you and: </p>
+
+      <div>
+        {addedUsers.map((email) => {
+          const name = getUserName(email);
+          return (
+            <div key = {email}>
+              <span>{name[0].toUpperCase()}</span>
+              <span>{name}</span>
+              <button type="button" 
+                onClick={() => setAddedUsers(addedUsers.filter(user => user !== email))}>
+                x</button>
+            </div>
+          )
+        })}
+      </div>
+
+      <input
+        type = "text"
+        placeholder = "Enter names or emails"
+        value = {input}
+        onChange = {(event) => setInput(event.target.value)}
+      />
+
+      <div>
+        {filteredUsers.length > 0 ? (
+          filteredUsers.map((user) => (
+            <div key={user._id} onClick={() => addFriend(user.email)}>
+              <div>{user.name}</div>
+              <div>{user.email}</div>
+            </div>
+          ))
+        ) : (
+          <div>
+            {input ? "No users found" : "No users available"}
+          </div>
+        )}
+      </div>
+
+    </div>
   )
 }
 
-export default AddUser
+export default SelectFriend;

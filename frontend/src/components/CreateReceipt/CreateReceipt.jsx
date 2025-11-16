@@ -25,8 +25,6 @@ function CreateReceipt() {
     }
   };
 
-  // 
-
 
   const [formData, setFormData] = useState({
     description: "",
