@@ -10,12 +10,7 @@ function CreateReceipt() {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
 
-  const [formData, setFormData] = useState({
-    description: "",
-    amount: "",
-    splitBetween: [],
-  });
-
+  // get all users 
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -29,6 +24,17 @@ function CreateReceipt() {
       console.log("Error", error);
     }
   };
+
+  // 
+
+
+  const [formData, setFormData] = useState({
+    description: "",
+    amount: "",
+    splitBetween: [],
+  });
+
+  
 
   //who did you share your receipt with, split the amounts
   const handleAddUser = (userId, splitAmount) => {
