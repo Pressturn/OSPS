@@ -1,135 +1,122 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
 function CreateReceipt() {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [successMessage, setSuccessMessage] = useState("");
+  const [allUsers, setAllUsers] = useState([]);
+  const [addedUsers, setAddedUsers] = useState([]);
 
-  // get all users 
+
   useEffect(() => {
-    fetchUsers();
-  }, []);
+    setAddedUsers(location.state.selectedFriends || []);
+    axios.get("http://localhost:3000/users")
+      .then(response => setAllUsers(response.data))
+      .catch(error => console.log("Fail to fetch users:", error))
+  }, [location]);
 
-  const fetchUsers = async () => {
-    try {
-      const response = await axios.get("http://localhost:3000/users");
-      setUsers(response.data);
-    } catch (error) {
-      setError("Fail to load user");
-      console.log("Error", error);
-    }
-  };
+  const getUserName = (email) => allUsers.find(user => user.email === email)?.name || email;
 
-
-  const [formData, setFormData] = useState({
-    description: "",
-    amount: "",
-    splitBetween: [],
-  });
-
-  
-
-  //who did you share your receipt with, split the amounts
-  const handleAddUser = (userId, splitAmount) => {
-    const alreadyAdded = formData.splitBetween.some(split=> split.user === userId);
-    
-    if (alreadyAdded){
-      alert('This user is already added');
-      return;
-    }
-
-    const newSplit = {
-      user: userId,
-      amount: parseFloat(splitAmount),
-    };
-
-    setFormData({
-      ...formData,
-      splitBetween: [...formData.splitBetween, newSplit],
-    });
-  };
+  const split = amount ? (parseFloat(amount) / (addedUsers.length + 1)).toFixed(2) : "0.00";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    //get token for JWT authentication
-    const token = localStorage.getItem("token");
-
-    //call axios to create the receipt
-    await axios.post("http://localhost:3000/receipts", formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    setSuccessMessage("receipt created");
-  };
-
-  const handleChange = (event) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+    try {
+      const token = localStorage.getItem("token");
+      await axios.post("http://localhost:3000/receipts", {
+        description,
+        amount: parseFloat(amount),
+        splitBetween: addedUsers.map(email => ({ email, amount: parseFloat(split) }))
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      navigate("/receipts");
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+    }
   };
 
   return (
     <div>
-      <div>Create New Receipt</div>
-      <p>Split an expense with your friend!</p>
+      <div>
+        <button onClick={() => navigate("/receipts/new")}>← Back</button>
+        <h1>Add Expense</h1>
+        <button onClick={handleSubmit} disabled={loading || !description || !amount}>
+          {loading ? "Saving..." : "Save"}
+        </button>
+      </div>
 
+      {/* Friends - Clickable to add more */}
+      <div onClick={() => navigate("/receipts/new", { state: { existingFriends: addedUsers } })}>
+        <label>With you and:</label>
+        <div>
+          {addedUsers.map((email, i) => (
+            <div key={i}>
+              <span>{getUserName(email)[0].toUpperCase()}</span>
+              <span>{getUserName(email)}</span>
+            </div>
+          ))}
+          <span>+ Add more</span>
+        </div>
+      </div>
+
+      {/* Form */}
       <form onSubmit={handleSubmit}>
         <div>
           <input
             type="text"
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            placeholder="Where did you spend it on?"
+            placeholder="Enter a description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             required
           />
         </div>
 
         <div>
-          <label>Total Amount $</label>
+          <span>SGD</span>
           <input
             type="number"
-            id="amount"
-            name="amount"
-            value={formData.amount}
-            onChange={handleChange}
-            placeholder="Enter total amount of your receipt"
+            placeholder="0.00"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            step="0.01"
+            min="0"
             required
           />
         </div>
 
-        {/* able to select which user you split with */}
         <div>
-          <label> Split With who?</label>
-          <select
-          onChange={(e)=> {
-            const userId = e.target.value;
-          }}></select>
+          Paid by <strong>you</strong> and split <strong>equally</strong>
         </div>
 
-        {/* Display who you are splitting with and how much */}
-        <div>
-          <h2>Split Between these people:</h2>
+        {/* Split preview */}
+        {amount > 0 && (
+          <div>
+            <h3>Split Details</h3>
 
-          {formData.splitBetween.map((split, index) => (
-            <div key={index}>
-              <span>
-                User: {split.user} - ${split.amount}
-              </span>
+            <div>
+              <span>You</span>
+              <span>SGD {splitAmount()}</span>
             </div>
-          ))}
-        </div>
 
-        <button type="submit" disabled={loading}>
-          Create Receipt
-        </button>
+            {addedUsers.map((email, i) => (
+              <div key={i}>
+                <span>{getUserName(email)}</span>
+                <span>SGD {splitAmount()}</span>
+              </div>
+            ))}
+
+            <div>
+              <span>Total</span>
+              <span>SGD {amount}</span>
+            </div>
+          </div>
+        )}
       </form>
     </div>
   );
