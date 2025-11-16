@@ -7,12 +7,14 @@ import ReceiptForm from "./components/EditReceiptPage/ReceiptForm";
 import './App.css';
 import SignUpPage from "./components/SignUpPage/SignUpPage.jsx"
 import SignInPage from "./components/SignInPage/SignInPage.jsx"
+import WelcomePage from "./components/WelcomePage/WelcomePage.jsx"
 
 function App() {
   return (
     <Router>
       <NavBar />
       <Routes>
+        <Route path="/" element={<WelcomePage />} />
         <Route path='/signup' element={<SignUpPage />} />
         <Route path='/signin' element={<SignInPage />} />
         <Route path="/receipts" element={<ReceiptList />} />
