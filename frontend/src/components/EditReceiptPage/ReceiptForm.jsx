@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getReceiptById, updateReceipt } from "../../services/receiptService";
+import "./ReceiptForm.css";
 
 const ReceiptForm = () => {
   const { id } = useParams();
@@ -15,8 +16,7 @@ const ReceiptForm = () => {
     amount: "",
   });
 
-  //have a state so that we can track whats the original receipt after edit
-  const [originalReceipt, setOriginalReceipt] = useState(null);
+ 
 
   useEffect(() => {
     fetchReceipt();
@@ -27,7 +27,6 @@ const ReceiptForm = () => {
       setLoading(true);
       //fetch receipt by ID from mongoDB backend
       const receipt = await getReceiptById(id);
-      setOriginalReceipt(receipt);
 
       //FILL UP THE FORM WITH existing receipt data
       setFormData({
@@ -92,13 +91,17 @@ const ReceiptForm = () => {
   };
 
   return (
-    <>
+    <div className="receipt-form-container">
       <h1>Edit Receipt</h1>
       <p>Update your receipt details below</p>
+      {error && <div className="error-message">{error}</div>}
+      {successMessage && <div className="success-message">{successMessage}</div>} 
+      
+      <div className="receipt-form-card">
       <form onSubmit={handleSubmit}>
         {/* 
 Description of expense */}
-        <div>
+        <div className="form-group">
           <label>Description</label>
           <input
             type="text"
@@ -111,7 +114,7 @@ Description of expense */}
         </div>
         {/* 
 Total amount */}
-        <div>
+        <div className="form-group">
           <label> Total Amount ($) </label>
           <input
             type="number"
@@ -123,16 +126,17 @@ Total amount */}
           />
         </div>
 
-        <div>
-          <button type="submit" disabled={loading}>
+        <div className="button-group">
+          <button className="submit-button" type="submit" disabled={loading}>
             {loading ? "Updating..." : "Update Receipt"}
           </button>
-          <button type="button" onClick={handleCancel} disabled={loading}>
+          <button className="cancel-button" type="button" onClick={handleCancel} disabled={loading}>
             Cancel
           </button>
         </div>
       </form>
-    </>
+      </div>
+    </div>
   );
 };
 export default ReceiptForm;

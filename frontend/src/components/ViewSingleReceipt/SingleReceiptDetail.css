@@ -1,0 +1,110 @@
+.receipt-detail-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.back-button {
+  padding: 8px 16px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  color: black;
+}
+
+.back-button:hover {
+  background-color: #e0e0e0;
+}
+
+.receipt-card {
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.receipt-field {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.receipt-field:last-child {
+  border-bottom: none;
+}
+
+.receipt-field strong {
+  color: #333;
+  display: inline-block;
+  min-width: 120px;
+}
+
+.receipt-field span {
+  color: #666;
+  margin-left: 10px;
+}
+
+.split-list {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.split-item {
+  padding: 10px;
+  margin-bottom: 8px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.split-item:hover {
+  background-color: #f0f0f0;
+}
+
+.split-amount {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.button-group {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  padding-top: 15px;
+  border-top: 2px solid #f0f0f0;
+}
+
+.edit-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.edit-button:hover {
+  background-color: #0056b3;
+}
+
+.delete-button {
+  padding: 10px 20px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
