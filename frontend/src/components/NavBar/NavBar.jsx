@@ -12,7 +12,7 @@ const NavBar = () => {
     <nav>
       <div>
         <div>
-          <Link to="/create">Create New Receipt</Link>
+          <Link to="/receipts/new">Create New Receipt</Link>
           <Link to="/receipts">View All Receipts</Link>
           <Link to="/groups">Groups</Link>
           <Link to="/dashboard">View My Balance Summary</Link>
