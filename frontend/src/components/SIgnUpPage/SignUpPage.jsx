@@ -12,7 +12,7 @@ function signUpPage() {
         event.preventDefault()
         try {
             await signUp(name, email, password)
-            setSusccess("Account created, directing to sign in")
+            setSuccess("Account created, directing to sign in")
             window.location.href = "/signin"
         } catch (error) {
             setError("Signup Failed. Email is in use")
