@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { signOut } from "../../services/authService"
 
 const NavBar = () => {
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    window.location.href = "/login";
+  const handleSignOut = () => {
+    signOut()
+    window.location.href = "/";
   };
 
   return (
@@ -15,7 +16,7 @@ const NavBar = () => {
           <Link to="/receipts">View All Receipts</Link>
           <Link to="/groups">Groups</Link>
           <Link to="/dashboard">View My Balance Summary</Link>
-          <button onClick={handleLogout}>Logout</button>
+          <button onClick={handleSignOut}>Sign Out</button>
         </div>
       </div>
     </nav>
