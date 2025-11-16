@@ -29,7 +29,7 @@ const signUp = async (req, res) => {
             {
                 token,
                 user: {
-                    id: newUser._id,
+                    _id: newUser._id,
                     name: newUser.name,
                     email: newUser.email
                 }

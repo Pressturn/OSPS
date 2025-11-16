@@ -15,7 +15,8 @@ const ReceiptForm = () => {
     amount: "",
   });
 
-  
+  //have a state so that we can track whats the original receipt after edit
+  const [originalReceipt, setOriginalReceipt] = useState(null);
 
   useEffect(() => {
     fetchReceipt();
@@ -26,6 +27,7 @@ const ReceiptForm = () => {
       setLoading(true);
       //fetch receipt by ID from mongoDB backend
       const receipt = await getReceiptById(id);
+      setOriginalReceipt(receipt);
 
       //FILL UP THE FORM WITH existing receipt data
       setFormData({
@@ -54,7 +56,6 @@ const ReceiptForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
 
     if (!formData.description || !formData.amount) {
       setError("Please fill in all required fields");
@@ -91,11 +92,9 @@ const ReceiptForm = () => {
   };
 
   return (
-    <div>
+    <>
       <h1>Edit Receipt</h1>
       <p>Update your receipt details below</p>
-      {error && <div style={{ color: "red" }}>{error}</div>}
-      {successMessage && <div style={{ color: "green" }}>{successMessage}</div>}
       <form onSubmit={handleSubmit}>
         {/* 
 Description of expense */}
@@ -108,7 +107,7 @@ Description of expense */}
             value={formData.description}
             onChange={handleInputChange}
             required
-          />
+          ></input>
         </div>
         {/* 
 Total amount */}
@@ -133,7 +132,7 @@ Total amount */}
           </button>
         </div>
       </form>
-    </div>
+    </>
   );
 };
 export default ReceiptForm;
