@@ -57,7 +57,6 @@ const ReceiptForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
     if (!formData.description || !formData.amount) {
       setError("Please fill in all required fields");
       return;
@@ -102,21 +101,22 @@ Description of expense */}
         <div>
           <label>Description</label>
           <input
-            type='text'
-            id='description'
-            name='description'
+            type="text"
+            id="description"
+            name="description"
             value={formData.description}
             onChange={handleInputChange}
-            required></input>
+            required
+          ></input>
         </div>
         {/* 
 Total amount */}
         <div>
           <label> Total Amount ($) </label>
           <input
-            type='number'
-            id='amount'
-            name='amount'
+            type="number"
+            id="amount"
+            name="amount"
             value={formData.amount}
             onChange={handleInputChange}
             required
@@ -132,7 +132,7 @@ Total amount */}
           </button>
         </div>
       </form>
-    </div>
+    </>
   );
 };
 export default ReceiptForm;
