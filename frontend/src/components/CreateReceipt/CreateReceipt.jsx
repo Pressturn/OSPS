@@ -59,7 +59,6 @@ function CreateReceipt() {
         <div>
           {addedUsers.map((email, i) => (
             <div key={i}>
-              <span>{getUserName(email)[0].toUpperCase()}</span>
               <span>{getUserName(email)}</span>
             </div>
           ))}
