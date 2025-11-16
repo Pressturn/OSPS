@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getReceiptById, deleteReceipt } from "../../services/receiptService";
+import "./SingleReceiptDetail.css";  
 
 const ReceiptDetail = () => {
   //URL route parameters from receipt ID
@@ -59,46 +60,54 @@ const ReceiptDetail = () => {
   }
 
   return (
-    <div>
-      <button onClick={() => navigate("/receipts")}>
+    <div className="receipt-detail-container">
+      <button className="back-button" onClick={() => navigate("/receipts")}>
         Back to all receipts
       </button>
 
       <h1>Receipt Details</h1>
 
-      <div>
-        <div>
+      <div className="receipt-card">
+        <div className="receipt-field">
           <strong>Description:</strong>
           <span>{receipt.description}</span>
         </div>
 
-        <div>
+        <div className="receipt-field">
           <strong>Amount:</strong>
           <span>${receipt.amount.toFixed(2)}</span>
         </div>
 
-        <div>
+        <div className="receipt-field">
           <strong>Paid By:</strong>
           <span>{receipt.paidBy?.name}</span>
         </div>
 
-        <div>
+        <div className="receipt-field">
           <strong>Split Between:</strong>
-          <div>
+          <div className="split-list">
             {receipt.splitBetween?.map((split, index) => (
-              <div key={index}>
+              <div key={index} className="split-item">
                 <span>{split.user?.name}</span>
-                <span> - ${split.amount.toFixed(2)}</span>
+                <span className="split-amount">
+                  {" "}
+                  - ${split.amount.toFixed(2)}
+                </span>
               </div>
             ))}
           </div>
         </div>
 
-        <div>
-          <button onClick={() => navigate(`/receipts/${id}/edit`)}>
+        <div className="button-group">
+          <button
+            className="edit-button"
+            onClick={() => navigate(`/receipts/${id}/edit`)}
+          >
             Edit Receipt
           </button>
-          <button onClick={() => handleDelete(id)}>Delete Receipt</button>
+          <button className="delete-button" onClick={() => handleDelete(id)}>
+            Delete Receipt
+          </button>
         </div>
       </div>
     </div>

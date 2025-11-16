@@ -55,9 +55,10 @@ const ReceiptList = () => {
             <div
               key={receipt._id}
               onClick={() => handleReceiptClick(receipt._id)}
+              className="receipt-item"
             >
-              <p>{receipt.description}</p>
-              <p>Paid By: {receipt.paidBy?.name}</p>
+              <p className="receipt-description">{receipt.description}</p>
+              <p className="receipt-paid-by">Paid By: {receipt.paidBy?.name}</p>
             </div>
           ))}
         </div>

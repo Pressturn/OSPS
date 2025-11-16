@@ -47,7 +47,13 @@ exports.getReceiptById = async (req, res) => {
     //from the id, in the DB find the name of who paid, who split with users
     const receipt = await Expense.findById(req.params.id)
       .populate("paidBy", "name")
-      .populate("splitBetween.user", "name");
+      .populate({
+        path: "splitBetween",
+        populate: {
+          path: "user",
+          select: "name",
+        },
+      });
 
     //if no receipt return an error
     if (!receipt) {
