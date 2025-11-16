@@ -29,10 +29,17 @@ function CreateReceipt() {
 
     try {
       const token = localStorage.getItem("token");
+
+      // Convert emails to user IDs
+      const splitBetween = addedUsers.map(email => {
+        const user = allUsers.find(u => u.email === email);
+        return { user: user._id, amount: parseFloat(split) };
+      });
+
       await axios.post("http://localhost:3000/receipts", {
         description,
         amount: parseFloat(amount),
-        splitBetween: addedUsers.map(email => ({ email, amount: parseFloat(split) }))
+        splitBetween
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -48,8 +55,8 @@ function CreateReceipt() {
       <div>
         <button onClick={() => navigate("/receipts/new")}>← Back</button>
         <h1>Add Expense</h1>
-        <button onClick={handleSubmit} disabled={loading || !description || !amount}>
-          {loading ? "Saving..." : "Save"}
+        <button onClick={handleSubmit} disabled={!description || !amount}>
+          Save
         </button>
       </div>
 

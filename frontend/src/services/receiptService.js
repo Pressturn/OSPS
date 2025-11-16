@@ -22,7 +22,10 @@ const getAuthHeaders = () => {
 //get all the receipts created
 const getAllReceipts = async () => {
   try {
-    const response = await api.get("/receipts");
+    const token = localStorage.getItem("token");
+    const response = await api.get("/receipts", {
+      headers: { Authorization: `Bearer ${token}` }
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching receipts", error);
@@ -33,29 +36,38 @@ const getAllReceipts = async () => {
 //get a single receipt by ID
 const getReceiptById = async (id) => {
   try {
-    const response = await api.get(`/receipts/${id}`);
+    const token = localStorage.getItem("token");
+    const response = await api.get(`/receipts/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching receipt:", error);
+    throw error;
   }
-  throw error;
 };
 
 //update or edit an existing receipt
 const updateReceipt = async (id, receiptData) => {
   try {
-    const response = await api.put(`/receipts/${id}`, receiptData);
+    const token = localStorage.getItem("token");
+    const response = await api.put(`/receipts/${id}`, receiptData, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
     return response.data;
   } catch (error) {
     console.error("error updating receipt:", error);
+    throw error;
   }
-  throw error;
 };
 
 //delete receipt
 const deleteReceipt = async (id) => {
   try {
-    const response = await api.delete(`/receipts/${id}`);
+    const token = localStorage.getItem("token");
+    const response = await api.delete(`/receipts/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
     return response.data;
   } catch (error) {
     console.error("Error deleting receipt:", error);
