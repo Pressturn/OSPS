@@ -10,6 +10,7 @@ import './App.css';
 import SignUpPage from "./components/SignUpPage/SignUpPage.jsx"
 import SignInPage from "./components/SignInPage/SignInPage.jsx"
 import WelcomePage from "./components/WelcomePage/WelcomePage.jsx"
+import BalanceSummary from "./components/BalanceSummary/BalanceSummary"
 
 function App() {
   const location = useLocation()
@@ -22,6 +23,7 @@ function App() {
         <Route path="/" element={<WelcomePage />} />
         <Route path='/signup' element={<SignUpPage />} />
         <Route path='/signin' element={<SignInPage />} />
+        <Route path='/dashboard' element={<BalanceSummary />} />
         <Route path="/receipts" element={<ReceiptList />} />
         <Route path="/receipts/new" element={<SelectFriend />} />
         <Route path="/receipts/new/details" element={<CreateReceipt />} />
