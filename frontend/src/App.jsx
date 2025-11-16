@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar.jsx";
 import ReceiptList from "./components/AllReceiptsPage/ReceiptList";
 import SingleReceiptDetail from "./components/ViewSingleReceipt/SingleReceiptDetail";
@@ -9,7 +9,7 @@ import SignUpPage from "./components/SignUpPage/SignUpPage.jsx"
 import SignInPage from "./components/SignInPage/SignInPage.jsx"
 import WelcomePage from "./components/WelcomePage/WelcomePage.jsx"
 
-function AppContent() {
+function App() {
   const location = useLocation()
   const hideNavBar = ['/', '/signin', '/signup'].includes(location.pathname)
 
@@ -26,14 +26,6 @@ function AppContent() {
       </Routes>
     </>
   );
-}
-
-function App() {
-  return (
-    <Router>
-      <AppContent />
-    </Router>
-  )
 }
 
 export default App;
