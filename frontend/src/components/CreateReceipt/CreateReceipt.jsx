@@ -8,10 +8,12 @@ function CreateReceipt() {
 
   const [allUsers, setAllUsers] = useState([]);
   const [addedUsers, setAddedUsers] = useState([]);
-
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setAddedUsers(location.state.selectedFriends || []);
+    setAddedUsers(location.state?.selectedFriends || []);
     axios.get("http://localhost:3000/users")
       .then(response => setAllUsers(response.data))
       .catch(error => console.log("Fail to fetch users:", error))
@@ -101,13 +103,13 @@ function CreateReceipt() {
 
             <div>
               <span>You</span>
-              <span>SGD {splitAmount()}</span>
+              <span>SGD {split}</span>
             </div>
 
             {addedUsers.map((email, i) => (
               <div key={i}>
                 <span>{getUserName(email)}</span>
-                <span>SGD {splitAmount()}</span>
+                <span>SGD {split}</span>
               </div>
             ))}
 

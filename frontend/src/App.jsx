@@ -1,9 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import NavBar from "./components/NavBar.jsx"; 
+import NavBar from "./components/NavBar.jsx";
 import ReceiptList from "./components/AllReceiptsPage/ReceiptList";
 import SingleReceiptDetail from "./components/ViewSingleReceipt/SingleReceiptDetail";
 import ReceiptForm from "./components/EditReceiptPage/ReceiptForm";
+import SelectFriend from "./components/CreateReceipt/SelectFriend";
+import CreateReceipt from "./components/CreateReceipt/CreateReceipt";
 import './App.css';
 
 function App() {
@@ -12,6 +14,8 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/receipts" element={<ReceiptList />} />
+        <Route path="/receipts/new" element={<SelectFriend />} />
+        <Route path="/create" element={<CreateReceipt />} />
         <Route path="/receipts/:id" element={<SingleReceiptDetail />} />
         <Route path="/receipts/:id/edit" element={<ReceiptForm />} />
       </Routes>

@@ -68,7 +68,6 @@ function SelectFriend() {
           const name = getUserName(email);
           return (
             <div key = {email}>
-              <span>{name[0].toUpperCase()}</span>
               <span>{name}</span>
               <button type="button" 
                 onClick={() => setAddedUsers(addedUsers.filter(user => user !== email))}>

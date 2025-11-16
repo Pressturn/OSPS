@@ -44,6 +44,7 @@ const ReceiptList = () => {
   return (
     <div>
       <h1>All Receipts</h1>
+      <button onClick={() => navigate('/receipts/new')}>+ Create New Receipt</button>
       <p>{receipts.length} receipts found</p>
 
       {receipts.length === 0 ? (
