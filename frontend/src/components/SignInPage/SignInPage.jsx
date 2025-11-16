@@ -9,7 +9,9 @@ function signInPage() {
         event.preventDefault()
         try {
             await signIn(email, password)
+            window.location.href = "/dashboard"
         } catch (error) {
+            setError("Invalid credentials")
             console.error(error)
         }
     }
