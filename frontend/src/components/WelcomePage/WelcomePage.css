@@ -1,0 +1,80 @@
+.welcome-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+  padding: 40px;
+}
+
+.welcome-box {
+  background-color: white;
+  border-radius: 24px;
+  padding: 60px 80px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+}
+
+.welcome-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.welcome-subtitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 0.5rem;
+}
+
+.welcome-description {
+  font-size: 0.95rem;
+  color: #334155;
+  margin-bottom: 2.5rem;
+}
+
+.welcome-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.welcome-btn {
+  padding: 14px 32px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  text-decoration: none;
+  display: block;
+  transition: all 0.2s;
+  font-family: "Inter", sans-serif;
+  text-align: center;
+}
+
+.btn-signup {
+  background-color: #06b6d4;
+  color: white;
+}
+
+.btn-signup:hover {
+  background-color: #0891b2;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.4);
+}
+
+.btn-signin {
+  background-color: white;
+  color: #06b6d4;
+  border: 2px solid #e2e8f0;
+}
+
+.btn-signin:hover {
+  background-color: #f8fafc;
+  border-color: #cbd5e1;
+}
