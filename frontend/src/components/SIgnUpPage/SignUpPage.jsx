@@ -1,5 +1,7 @@
 import { useState } from "react"
 import { signUp } from "../../services/authService"
+import { Link } from "react-router-dom"
+import "./SignUpPage.css"
 
 function signUpPage() {
     const [name, setName] = useState("")
@@ -21,29 +23,45 @@ function signUpPage() {
     }
 
     return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="Name"
-                    value={name}
-                    onChange={(event) => setName(event.target.value)}
-                />
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                />
-                <button type="submit">Sign Up</button>
-            </form>
-        </>
+        <div className="signup-container">
+            <div className="signup-box">
+                <h1 className="signup-title">Create Account</h1>
+                <p className="signup-subtitle">Join OSPS to start splitting expenses</p>
+
+                <form onSubmit={handleSubmit} className="signup-form">
+                    <input
+                        type="text"
+                        placeholder="Name"
+                        className="form-input"
+                        value={name}
+                        onChange={(event) => setName(event.target.value)}
+
+                    />
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        className="form-input"
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        className="form-input"
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                    />
+                    <button type="submit" className="signup-btn"
+                    >Sign Up
+                    </button>
+                </form>
+
+                {error && <p className="error-message">{error}</p>}
+                <p className="signup-link">
+                    Already have an account? <Link to="/signin">Sign In</Link>
+                </p>
+            </div>
+        </div>
     )
 }
 
