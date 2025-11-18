@@ -1,7 +1,7 @@
 //import the expense model
 const Expense = require("../models/expense");
-const { calculateBalances } = require('../util/balanceCalculator');
-const { getUserBalanceSummary } = require('../services/balanceSummary');
+const { calculateBalances } = require("../util/balanceCalculator");
+const { getUserBalanceSummary } = require("../services/balanceSummary");
 
 //function to create new receipts
 exports.createReceipt = async (req, res) => {
@@ -98,12 +98,42 @@ exports.updateReceipt = async (req, res) => {
         .json({ error: "Not authorised to update this receipt" });
     }
 
+
+    if (req.body.amount && req.body.amount != receipt.amount) {
+      const newAmount = req.body.amount;
+      const numberOfPeople = receipt.splitBetween.length;
+      const splitAmount = newAmount / numberOfPeople;
+
+      console.log("Number of people:", numberOfPeople);
+      console.log("Split amount per person:", splitAmount);
+
+      //update each person split amount with the new total amount /people
+      const updatedSplitBetween = receipt.splitBetween.map((split) => ({
+        user: split.user._id || split.user,
+        amount: splitAmount,
+      }));
+
+      console.log("Updated splitBetween:", updatedSplitBetween);
+
+      req.body.splitBetween = updatedSplitBetween;
+    }
+
+    console.log("Final req.body before update:", req.body);
+
     //replace the old fields with new ones
     const updatedReceipt = await Expense.findByIdAndUpdate(
       req.params.id, //receipt id from the url
       req.body, // data sent by the client
       { new: true, runValidators: true } //new. = true returns the updated receipt, validators: make sure the new data obeys the schema
-    );
+    )
+      .populate("paidBy", "name")
+      .populate({
+        path: "splitBetween",
+        populate: {
+          path: "user",
+          select: "name",
+        },
+      });
 
     res.status(200).json(updatedReceipt);
   } catch (error) {
@@ -157,10 +187,10 @@ exports.testBalance = async (req, res) => {
 
 exports.getBalanceSummary = async (req, res) => {
   try {
-    const userId = req.user.userId
-    const summary = await getUserBalanceSummary(userId)
-    res.json(summary)
+    const userId = req.user.userId;
+    const summary = await getUserBalanceSummary(userId);
+    res.json(summary);
   } catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message });
   }
-}
+};
