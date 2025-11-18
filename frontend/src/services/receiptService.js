@@ -77,16 +77,14 @@ const deleteReceipt = async (id) => {
 
 const getUserBalance = async () => {
   try {
-    const userId = localStorage.getItem("userId")
-
-    const response = await api.get(`/users/${userId}/balance`, {
-      headers: getAuthHeaders()
-    })
-
-    return response.data
+    const token = localStorage.getItem("token");
+    const response = await api.get(`/receipts/balance`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    return response.data;
   } catch (error) {
-    console.error("Error fetching balance:", error)
-    throw error
+    console.error("Error fetching balance:", error);
+    throw error;
   }
 }
 
