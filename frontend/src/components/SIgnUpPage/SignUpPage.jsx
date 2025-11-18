@@ -23,10 +23,10 @@ function signUpPage() {
     }
 
     return (
-        <div className="signup-container">
-            <div className="signup-box">
-                <h1 className="signup-title">Create Account</h1>
-                <p className="signup-subtitle">Join OSPS to start splitting expenses</p>
+        <div className="page-container">
+            <div className="page-box">
+                <h1 className="page-title">Create Account</h1>
+                <p className="page-subtitle">Join OSPS to start splitting expenses</p>
 
                 <form onSubmit={handleSubmit} className="signup-form">
                     <input
@@ -51,12 +51,13 @@ function signUpPage() {
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
                     />
-                    <button type="submit" className="signup-btn"
+                    <button type="submit" className="btn-primary"
                     >Sign Up
                     </button>
                 </form>
 
                 {error && <p className="error-message">{error}</p>}
+
                 <p className="signup-link">
                     Already have an account? <Link to="/signin">Sign In</Link>
                 </p>
