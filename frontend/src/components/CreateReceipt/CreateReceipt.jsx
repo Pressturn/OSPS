@@ -52,13 +52,13 @@ function CreateReceipt() {
   };
 
   return (
-    <div className="create-receipt-container">
-      <div className="create-receipt-box">
+    <div className="page-container">
+      <div className="page-box">
         <button className="back-btn"
           onClick={() => navigate("/receipts/new")}>
           ← Back</button>
 
-        <h1>Add Expense</h1>
+        <h1 className="page-title">Add Expense</h1>
 
         {/* Friends - Clickable to add more */}
         <div className="friends-section"
@@ -126,7 +126,8 @@ function CreateReceipt() {
             </div>
           )}
 
-          <button onClick={handleSubmit} className="submit-btn" disabled={!description || !amount}>
+          <button onClick={handleSubmit} className="btn-primary" 
+          disabled={!description || !amount}>
             Save
           </button>
         </form>

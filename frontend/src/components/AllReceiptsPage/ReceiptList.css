@@ -1,7 +1,14 @@
+.receipt-count {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin: 16px 0 20px 0;
+}
+
 .receipt-item {
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px;
+  margin-top: 20px;
   margin-bottom: 10px;
   cursor: pointer;
   background-color: #fff;
@@ -9,7 +16,7 @@
 }
 
 .receipt-item:hover {
-  border-color: #007bff;
+  border-color: #06b6d4;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
 }

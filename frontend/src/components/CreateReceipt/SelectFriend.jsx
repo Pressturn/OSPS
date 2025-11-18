@@ -59,10 +59,10 @@ function SelectFriend() {
   const getUserName = (email) => allUsers.find(user => user.email === email)?.name || email;
 
   return (
-    <div className="select-friend-container">
-      <div className="select-friend-box">
-        <h1 className="select-friend-title">Add an expense</h1>
-        <p className="select-friend-subtitle">With you and: </p>
+    <div className="page-container">
+      <div className="page-box">
+        <h1 className="page-title">Add an expense</h1>
+        <p className="page-subtitle">With you and: </p>
 
         <div className="added-users-list">
           {addedUsers.map((email) => {
@@ -82,7 +82,7 @@ function SelectFriend() {
 
         <input
           type="text"
-          className="search-input"
+          className="form-input"
           placeholder="Enter names or emails"
           value={input}
           onChange={(event) => setInput(event.target.value)}

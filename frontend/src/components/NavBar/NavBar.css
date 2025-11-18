@@ -1,8 +1,12 @@
 .navbar {
-  padding: 15px 20px;
-  position: sticky;
+  padding: 20px 20px;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+    width: 100%; 
   z-index: 1000;
+  
 }
 
 .navbar-container {

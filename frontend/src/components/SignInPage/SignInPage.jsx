@@ -20,10 +20,10 @@ function signInPage() {
     }
 
     return (
-        <div className="signin-container">
-            <div className="signin-box">
-                <h1 className="signin-title">Welcome Back</h1>
-                <p className="signin-subtitle">Sign in to your OSPS account</p>
+        <div className="page-container">
+            <div className="page-box">
+                <h1 className="page-title">Welcome Back</h1>
+                <p className="page-subtitle">Sign in to your OSPS account</p>
                 <form onSubmit={handleSubmit} className="signin-form">
                     <input
                         types="email"
@@ -39,7 +39,7 @@ function signInPage() {
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
                     />
-                    <button type="submit" className="signin-btn"
+                    <button type="submit" className="btn-primary"
                     >Sign In
                     </button>
                 </form>

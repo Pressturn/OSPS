@@ -20,8 +20,8 @@ function BalanceSummary() {
 
     if (!balance) {
         return (
-            < div className="balance-container" >
-                <div className="balance-box">
+            < div className="page-container" >
+                <div className="page-box">
                     <p className="Loading-message">Loading</p>
                 </div>
             </div>
@@ -29,9 +29,9 @@ function BalanceSummary() {
     }
 
     return (
-        <div className="balance-container">
-            <div className="balance-box">
-                <h1 className="balance-title">Balance Summary</h1>
+        <div className="page-container">
+            <div className="page-box">
+                <h1 className="page-title">Balance Summary</h1>
 
                 <div className="balance-summary">
                     <div className="balance-item">
