@@ -14,7 +14,7 @@ function CreateReceipt() {
 
   useEffect(() => {
     setAddedUsers(location.state?.selectedFriends || []);
-    axios.get("https://osps-backend.onrender.com")
+    axios.get("https://osps-backend.onrender.com/users")
       .then(response => setAllUsers(response.data))
       .catch(error => console.log("Fail to fetch users:", error))
   }, [location]);
@@ -42,7 +42,7 @@ function CreateReceipt() {
         { user: currentUserId, amount: parseFloat(split) }
       ];
 
-      await axios.post("http://localhost:3000/receipts", {
+      await axios.post("https://osps-backend.onrender.com/receipts", {
         description,
         amount: parseFloat(amount),
         splitBetween

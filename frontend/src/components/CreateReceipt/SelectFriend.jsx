@@ -19,7 +19,7 @@ function SelectFriend() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/users');
+      const response = await axios.get('https://osps-backend.onrender.com/users');
       setAllUsers(response.data);
 
     } catch (error) {
