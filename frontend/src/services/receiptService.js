@@ -13,14 +13,6 @@ const api = axios.create({
   },
 });
 
-const getAuthHeaders = () => {
-  const token = localStorage.getItem("token");
-  return {
-    "Content-type": "application/json",
-    Authorization: `Bearer ${token}`,
-  };
-};
-
 //get all the receipts created
 const getAllReceipts = async () => {
   try {

@@ -1,6 +1,5 @@
 //import the expense model
 const Expense = require("../models/expense");
-const { calculateBalances } = require("../util/balanceCalculator");
 const { getUserBalanceSummary } = require("../services/balanceSummary");
 
 //function to create new receipts
@@ -104,8 +103,6 @@ exports.updateReceipt = async (req, res) => {
       const numberOfPeople = receipt.splitBetween.length;
       const splitAmount = newAmount / numberOfPeople;
 
-      console.log("Number of people:", numberOfPeople);
-      console.log("Split amount per person:", splitAmount);
 
       //update each person split amount with the new total amount /people
       const updatedSplitBetween = receipt.splitBetween.map((split) => ({
@@ -113,12 +110,8 @@ exports.updateReceipt = async (req, res) => {
         amount: splitAmount,
       }));
 
-      console.log("Updated splitBetween:", updatedSplitBetween);
-
       req.body.splitBetween = updatedSplitBetween;
     }
-
-    console.log("Final req.body before update:", req.body);
 
     //replace the old fields with new ones
     const updatedReceipt = await Expense.findByIdAndUpdate(
@@ -167,23 +160,6 @@ exports.deleteReceipt = async (req, res) => {
   }
 };
 
-//test balance calculation
-exports.testBalance = async (req, res) => {
-  try {
-    //get all expense documents from mongoDB
-    const expenses = await Expense.find();
-    //function from util folder
-    const result = calculateBalances(expenses);
-
-    res.json({
-      message: "Balance calculation successful!",
-      totalExpenses: expenses.length,
-      debts: result,
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
 
 exports.getBalanceSummary = async (req, res) => {
   try {
