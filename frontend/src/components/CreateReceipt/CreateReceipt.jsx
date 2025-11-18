@@ -10,7 +10,6 @@ function CreateReceipt() {
   const [addedUsers, setAddedUsers] = useState([]);
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setAddedUsers(location.state?.selectedFriends || []);
@@ -23,18 +22,24 @@ function CreateReceipt() {
 
   const split = amount ? (parseFloat(amount) / (addedUsers.length + 1)).toFixed(2) : "0.00";
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
     try {
       const token = localStorage.getItem("token");
+      const currentUserId = localStorage.getItem("userId");
 
-      // Convert emails to user IDs
-      const splitBetween = addedUsers.map(email => {
+      // Convert emails to user IDs for other users
+      const otherUsers = addedUsers.map(email => {
         const user = allUsers.find(u => u.email === email);
         return { user: user._id, amount: parseFloat(split) };
       });
+
+      // Include yourself in the split
+      const splitBetween = [
+        ...otherUsers,
+        { user: currentUserId, amount: parseFloat(split) }
+      ];
 
       await axios.post("http://localhost:3000/receipts", {
         description,
@@ -46,7 +51,6 @@ function CreateReceipt() {
       navigate("/receipts");
     } catch (err) {
       console.error(err);
-      setLoading(false);
     }
   };
 
