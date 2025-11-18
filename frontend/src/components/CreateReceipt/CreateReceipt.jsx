@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import "./CreateReceipt.css"
 
 function CreateReceipt() {
   const navigate = useNavigate();
@@ -55,81 +56,86 @@ function CreateReceipt() {
   };
 
   return (
-    <div>
-      <div>
-        <button onClick={() => navigate("/receipts/new")}>← Back</button>
-        <h1>Add Expense</h1>
-        <button onClick={handleSubmit} disabled={!description || !amount}>
-          Save
-        </button>
-      </div>
+    <div className="page-container">
+      <div className="page-box">
+        <button className="back-btn"
+          onClick={() => navigate("/receipts/new")}>
+          ← Back</button>
 
-      {/* Friends - Clickable to add more */}
-      <div onClick={() => navigate("/receipts/new", { state: { existingFriends: addedUsers } })}>
-        <label>With you and:</label>
-        <div>
-          {addedUsers.map((email, i) => (
-            <div key={i}>
-              <span>{getUserName(email)}</span>
-            </div>
-          ))}
-          <span>+ Add more</span>
-        </div>
-      </div>
+        <h1 className="page-title">Add Expense</h1>
 
-      {/* Form */}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            type="text"
-            placeholder="Enter a description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-        </div>
-
-        <div>
-          <span>SGD</span>
-          <input
-            type="number"
-            placeholder="0.00"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            step="0.01"
-            min="0"
-            required
-          />
-        </div>
-
-        <div>
-          Paid by <strong>you</strong> and split <strong>equally</strong>
-        </div>
-
-        {/* Split preview */}
-        {amount > 0 && (
-          <div>
-            <h3>Split Details</h3>
-
-            <div>
-              <span>You</span>
-              <span>SGD {split}</span>
-            </div>
-
+        {/* Friends - Clickable to add more */}
+        <div className="friends-section"
+          onClick={() => navigate("/receipts/new", { state: { existingFriends: addedUsers } })}>
+          <label>With you and:</label>
+          <div className="friends-list">
             {addedUsers.map((email, i) => (
-              <div key={i}>
-                <span>{getUserName(email)}</span>
+              <span key={i} className="friend-name">
+                {getUserName(email)}, </span>
+            ))}
+            <span className="add-more-link">+ Add more</span>
+          </div>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit}>
+          <div>
+            <input
+              type="text"
+              className="form-input"
+              placeholder="Enter a description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+
+            <label>SGD</label>
+            <input
+              type="number"
+              className="form-input"
+              placeholder="0.00"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              step="0.01"
+              min="0"
+              required
+            />
+          </div>
+
+          <div className="paid-info">
+            Paid by <strong>you</strong> and split <strong>equally</strong>
+          </div>
+
+          {/* Split preview */}
+          {amount > 0 && (
+            <div className="split-preview">
+              <h3>Split Details</h3>
+
+              <div className="split-item">
+                <span>You</span>
                 <span>SGD {split}</span>
               </div>
-            ))}
 
-            <div>
-              <span>Total</span>
-              <span>SGD {amount}</span>
+              {addedUsers.map((email, i) => (
+                <div key={i} className="split-item">
+                  <span>{getUserName(email)}</span>
+                  <span>SGD {split}</span>
+                </div>
+              ))}
+
+              <div className="split-item split-total">
+                <span>Total</span>
+                <span>SGD {amount}</span>
+              </div>
             </div>
-          </div>
-        )}
-      </form>
+          )}
+
+          <button onClick={handleSubmit} className="btn-primary" 
+          disabled={!description || !amount}>
+            Save
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

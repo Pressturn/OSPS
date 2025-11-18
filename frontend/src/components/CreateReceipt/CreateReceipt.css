@@ -1,0 +1,87 @@
+.back-btn {
+  padding: 10px 20px;
+  background-color: #f1f5f9;
+  color: #334155;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+.back-btn:hover {
+  background-color: #e2e8f0;
+}
+
+.friends-section {
+  background-color: #f8fafc;
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.friends-section:hover {
+  background-color: #f1f5f9;
+}
+
+.friends-section label {
+  color: #64748b;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.friends-list {
+  color: #334155;
+}
+
+.friend-name {
+  color: #334155;
+}
+
+.add-more-link {
+  color: #06b6d4;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.paid-info {
+  margin: 20px 0;
+  color: #64748b;
+  text-align: center;
+}
+
+.paid-info strong {
+  color: #0f172a;
+}
+
+.split-preview {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 2px solid #e2e8f0;
+}
+
+.split-preview h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 15px;
+}
+
+.split-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  color: #334155;
+}
+
+.split-total {
+  font-weight: 700;
+  border-top: 2px solid #e2e8f0;
+  margin-top: 10px;
+  padding-top: 15px;
+  color: #0f172a;
+}

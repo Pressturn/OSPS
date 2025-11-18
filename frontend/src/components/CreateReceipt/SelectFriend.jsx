@@ -1,7 +1,7 @@
-import React from 'react';
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './SelectFriend.css'
 
 function SelectFriend() {
   const navigate = useNavigate();
@@ -29,17 +29,17 @@ function SelectFriend() {
 
   // Run this function whenever any dependency changes; filter as user types
   useEffect(() => {
-    const search = input.trim().toLowerCase(); 
+    const search = input.trim().toLowerCase();
 
-    const filteredSearch = allUsers.filter(user => 
+    const filteredSearch = allUsers.filter(user =>
       (user.name.toLowerCase().includes(search) || user.email.toLowerCase().includes(search))
 
       // Hide duplicate search result; prevent same user from being added twice
-      &&!addedUsers.includes(user.email)
+      && !addedUsers.includes(user.email)
     );
 
     setFilteredUsers(filteredSearch)
-  },[input, allUsers, addedUsers]);
+  }, [input, allUsers, addedUsers]);
 
   // Add a friend to the expense
   const addFriend = (email) => {
@@ -54,51 +54,56 @@ function SelectFriend() {
       navigate("/receipts/new/details", { state: { selectedFriends: newUser } });
     }
   }
-  
+
   // Convert email into user's name
   const getUserName = (email) => allUsers.find(user => user.email === email)?.name || email;
 
   return (
-    <div>
-      <h1>Add an expense</h1>
-      <p>With you and: </p>
+    <div className="page-container">
+      <div className="page-box">
+        <h1 className="page-title">Add an expense</h1>
+        <p className="page-subtitle">With you and: </p>
 
-      <div>
-        {addedUsers.map((email) => {
-          const name = getUserName(email);
-          return (
-            <div key = {email}>
-              <span>{name}</span>
-              <button type="button" 
-                onClick={() => setAddedUsers(addedUsers.filter(user => user !== email))}>
-                x</button>
+        <div className="added-users-list">
+          {addedUsers.map((email) => {
+            const name = getUserName(email);
+            return (
+              <div key={email} className="added-user-tag">
+                <span>{name}</span>
+                <button type="button"
+                  className="remove-user-btn"
+                  onClick={() => setAddedUsers(addedUsers.filter(user => user !== email))}>
+                  x
+                  </button>
+              </div>
+            )
+          })}
+        </div>
+
+        <input
+          type="text"
+          className="form-input"
+          placeholder="Enter names or emails"
+          value={input}
+          onChange={(event) => setInput(event.target.value)}
+        />
+
+        <div className="users-list">
+          {filteredUsers.length > 0 ? (
+            filteredUsers.map((user) => (
+              <div key={user._id} className="user-item"
+                onClick={() => addFriend(user.email)}>
+                <div className="user-name">{user.name}</div>
+                <div className="user-email">{user.email}</div>
+              </div>
+            ))
+          ) : (
+            <div className="empty-message">
+              {input ? "No users found" : "No users available"}
             </div>
-          )
-        })}
+          )}
+        </div>
       </div>
-
-      <input
-        type = "text"
-        placeholder = "Enter names or emails"
-        value = {input}
-        onChange = {(event) => setInput(event.target.value)}
-      />
-
-      <div>
-        {filteredUsers.length > 0 ? (
-          filteredUsers.map((user) => (
-            <div key={user._id} onClick={() => addFriend(user.email)}>
-              <div>{user.name}</div>
-              <div>{user.email}</div>
-            </div>
-          ))
-        ) : (
-          <div>
-            {input ? "No users found" : "No users available"}
-          </div>
-        )}
-      </div>
-
     </div>
   )
 }

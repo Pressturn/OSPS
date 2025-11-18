@@ -34,35 +34,50 @@ const ReceiptList = () => {
   };
 
   if (loading) {
-    return <div>Loading receipts...</div>;
+    return (
+      <div className="page-container">
+        <div className="page-box">
+          <p className="loading-message">Loading receipts...</p>
+        </div>
+      </div>
+    )
   }
 
+
   if (error) {
-    return <div>{error}</div>;
+    return (
+      <div className="page-container">
+        <div className="page-box">
+          <p className="error-message">{error}</p>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div>
-      <h1>All Receipts</h1>
-      <button onClick={() => navigate('/receipts/new')}>+ Create New Receipt</button>
-      <p>{receipts.length} receipts found</p>
+    <div className="page-container">
+      <div className="page-box">
+        <h1 className="page-title">All Receipts</h1>
+        <button className="btn-primary"
+          onClick={() => navigate('/receipts/new')}>+ Create New Receipt</button>
 
-      {receipts.length === 0 ? (
-        <p>No receipts found. Start by creating one.</p>
-      ) : (
-        <div>
-          {receipts.map((receipt) => (
-            <div
-              key={receipt._id}
-              onClick={() => handleReceiptClick(receipt._id)}
-              className="receipt-item"
-            >
-              <p className="receipt-description">{receipt.description}</p>
-              <p className="receipt-paid-by">Paid By: {receipt.paidBy?.name}</p>
-            </div>
-          ))}
-        </div>
-      )}
+        {receipts.length === 0 ? (
+          <p className="empty-message">No receipts found. Start by creating one.</p>
+        ) : (
+          <div>
+            {receipts.map((receipt) => (
+              <div
+                key={receipt._id}
+                onClick={() => handleReceiptClick(receipt._id)}
+                className="receipt-item"
+              >
+                <p className="receipt-description">{receipt.description}</p>
+                <p className="receipt-paid-by">Paid By: {receipt.paidBy?.name}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

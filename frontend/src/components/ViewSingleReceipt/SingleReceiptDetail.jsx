@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getReceiptById, deleteReceipt } from "../../services/receiptService";
-import "./SingleReceiptDetail.css";  
+import "./SingleReceiptDetail.css";
 
 const ReceiptDetail = () => {
   //URL route parameters from receipt ID
@@ -48,66 +48,86 @@ const ReceiptDetail = () => {
   };
 
   if (loading) {
-    return <div>Loading receipt details please wait...</div>;
+    return (
+      <div className="page-container">
+        <div className="page-box">
+          <p className="loading-message">Loading receipt details please wait...</p>
+        </div>
+      </div>
+    )
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return (
+      <div className="page-container">
+        <div className="page-box">
+          <p className="error-message">{error}</p>
+        </div >
+      </div >
+    )
   }
 
   if (!receipt) {
-    return <div>Receipt not found</div>;
+    return (
+      <div className="page-container">
+        <div className="page-box">
+          <p className="error-message">Receipt not found</p>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div className="receipt-detail-container">
-      <button className="back-button" onClick={() => navigate("/receipts")}>
-        Back to all receipts
-      </button>
+    <div className="page-container">
+      <div className="page-box">
+        <button className="back-button" onClick={() => navigate("/receipts")}>
+          Back to all receipts
+        </button>
 
-      <h1>Receipt Details</h1>
+        <h1 className="page-title">Receipt Details</h1>
 
-      <div className="receipt-card">
-        <div className="receipt-field">
-          <strong>Description:</strong>
-          <span>{receipt.description}</span>
-        </div>
-
-        <div className="receipt-field">
-          <strong>Amount:</strong>
-          <span>${receipt.amount.toFixed(2)}</span>
-        </div>
-
-        <div className="receipt-field">
-          <strong>Paid By:</strong>
-          <span>{receipt.paidBy?.name}</span>
-        </div>
-
-        <div className="receipt-field">
-          <strong>Split Between:</strong>
-          <div className="split-list">
-            {receipt.splitBetween?.map((split, index) => (
-              <div key={index} className="split-item">
-                <span>{split.user?.name}</span>
-                <span className="split-amount">
-                  {" "}
-                  - ${split.amount.toFixed(2)}
-                </span>
-              </div>
-            ))}
+        <div className="receipt-card">
+          <div className="receipt-field">
+            <strong>Description:</strong>
+            <span>{receipt.description}</span>
           </div>
-        </div>
 
-        <div className="button-group">
-          <button
-            className="edit-button"
-            onClick={() => navigate(`/receipts/${id}/edit`)}
-          >
-            Edit Receipt
-          </button>
-          <button className="delete-button" onClick={() => handleDelete(id)}>
-            Delete Receipt
-          </button>
+          <div className="receipt-field">
+            <strong>Amount:</strong>
+            <span>${receipt.amount.toFixed(2)}</span>
+          </div>
+
+          <div className="receipt-field">
+            <strong>Paid By:</strong>
+            <span>{receipt.paidBy?.name}</span>
+          </div>
+
+          <div className="receipt-field">
+            <strong>Split Between:</strong>
+            <div className="split-list">
+              {receipt.splitBetween?.map((split, index) => (
+                <div key={index} className="split-item">
+                  <span>{split.user?.name}</span>
+                  <span className="split-amount">
+                    {" "}
+                    - ${split.amount.toFixed(2)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="button-group">
+            <button
+              className="btn-secondary"
+              onClick={() => navigate(`/receipts/${id}/edit`)}
+            >
+              Edit Receipt
+            </button>
+            <button className="delete-button" onClick={() => handleDelete(id)}>
+              Delete Receipt
+            </button>
+          </div>
         </div>
       </div>
     </div>

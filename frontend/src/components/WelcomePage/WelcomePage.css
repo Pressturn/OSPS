@@ -1,0 +1,22 @@
+.welcome-box {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 70vh;
+}
+
+.welcome-title {
+  white-space: nowrap;
+}
+
+.welcome-description {
+  color: #334155;
+  margin-bottom: 2.5rem;
+}
+
+.welcome-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
