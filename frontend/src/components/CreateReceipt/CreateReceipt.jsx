@@ -14,7 +14,7 @@ function CreateReceipt() {
 
   useEffect(() => {
     setAddedUsers(location.state?.selectedFriends || []);
-    axios.get("http://localhost:3000/users")
+    axios.get("https://osps-backend.onrender.com")
       .then(response => setAllUsers(response.data))
       .catch(error => console.log("Fail to fetch users:", error))
   }, [location]);
