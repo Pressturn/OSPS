@@ -90,10 +90,37 @@ const getUserBalance = async () => {
   }
 }
 
+//get all users
+const getAllUsers = async () => {
+  try {
+    const response = await api.get("/users");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw error;
+  }
+}
+
+//create receipt
+const createReceipt = async (receiptData) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await api.post("/receipts", receiptData, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating receipt:", error);
+    throw error;
+  }
+}
+
 export {
   getAllReceipts,
   getReceiptById,
   updateReceipt,
   deleteReceipt,
   getUserBalance,
+  getAllUsers,
+  createReceipt,
 }
