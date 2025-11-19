@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { getAllUsers } from '../../services/receiptService';
 import './SelectFriend.css'
 
 function SelectFriend() {
@@ -19,9 +19,8 @@ function SelectFriend() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('https://osps-backend.onrender.com/users');
-      setAllUsers(response.data);
-
+      const users = await getAllUsers();
+      setAllUsers(users);
     } catch (error) {
       console.error(error);
     }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import { getAllUsers, createReceipt } from "../../services/receiptService";
 import "./CreateReceipt.css"
 
 function CreateReceipt() {
@@ -14,8 +14,8 @@ function CreateReceipt() {
 
   useEffect(() => {
     setAddedUsers(location.state?.selectedFriends || []);
-    axios.get("https://osps-backend.onrender.com/users")
-      .then(response => setAllUsers(response.data))
+    getAllUsers()
+      .then(users => setAllUsers(users))
       .catch(error => console.log("Fail to fetch users:", error))
   }, [location]);
 
@@ -27,7 +27,6 @@ function CreateReceipt() {
     event.preventDefault();
 
     try {
-      const token = localStorage.getItem("token");
       const currentUserId = localStorage.getItem("userId");
 
       // Convert emails to user IDs for other users
@@ -42,12 +41,10 @@ function CreateReceipt() {
         { user: currentUserId, amount: parseFloat(split) }
       ];
 
-      await axios.post("https://osps-backend.onrender.com/receipts", {
+      await createReceipt({
         description,
         amount: parseFloat(amount),
         splitBetween
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
       });
       navigate("/receipts");
     } catch (err) {

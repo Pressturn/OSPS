@@ -31,7 +31,20 @@ exports.getAllReceipts = async (req, res) => {
       $or: [{ paidBy: userId }, { "splitBetween.user": userId }],
     })
       .populate("paidBy", "name") //get data on who paid
-      .populate("splitBetween", "name"); //who you split the receipt with
+      .populate("splitBetween.user", "name"); //who you split the receipt with
+
+    res.status(200).json(receipts);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// DEBUG ONLY - Get ALL receipts (no filter)
+exports.getAllReceiptsDebug = async (req, res) => {
+  try {
+    const receipts = await Expense.find({})
+      .populate("paidBy", "name")
+      .populate("splitBetween.user", "name");
 
     res.status(200).json(receipts);
   } catch (error) {
