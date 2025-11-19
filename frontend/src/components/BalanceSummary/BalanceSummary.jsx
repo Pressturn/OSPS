@@ -36,18 +36,18 @@ function BalanceSummary() {
                 <div className="balance-summary">
                     <div className="balance-item">
                         <span className="balance-label">Total You Owe:</span>
-                        <span className="balance-amount amount-owe">${balance.totalYouOwe}</span>
+                        <span className="balance-amount amount-owe">${Number(balance.totalYouOwe).toFixed(2)}</span>
                     </div>
 
                     <div className="balance-item">
                         <span className="balance-label">Total Others Owe You:</span>
-                        <span className="balance-amount amount-owed">${balance.totalOthersOwesYou}</span>
+                        <span className="balance-amount amount-owed">${Number(balance.totalOthersOwesYou).toFixed(2)}</span>
                     </div>
 
                     <div className="balance-item">
                         <span className="balance-label">Nett Balance:</span>
                         <span className={`balance-amount amount-net ${balance.nettBalance < 0 ? 'amount-owe' : 'amount-owed'}`}>
-                            ${balance.nettBalance}
+                            ${Number(balance.nettBalance).toFixed(2)}
                         </span>
                     </div>
                 </div>
@@ -59,7 +59,7 @@ function BalanceSummary() {
                             {balance.youOwe.map((debt) => (
                                 <div key={debt.userId} className="debt-item owe">
                                     <span className="debt-name">You owe {debt.name}</span>
-                                    <span className="debt-amount">${debt.amount}</span>
+                                    <span className="debt-amount">${Number(debt.amount).toFixed(2)}</span>
                                 </div>
                             ))}
                         </div>
@@ -75,7 +75,7 @@ function BalanceSummary() {
                             {balance.owesYou.map((debt) => (
                                 <div key={debt.userId} className="debt-item owed">
                                     <span className="debt-name">{debt.name} owes you</span>
-                                    <span className="debt-amount">${debt.amount}</span>
+                                    <span className="debt-amount">${Number(debt.amount).toFixed(2)}</span>
                                 </div>
                             ))}
                         </div>
