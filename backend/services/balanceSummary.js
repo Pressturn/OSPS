@@ -19,9 +19,9 @@ async function getUserBalanceSummary(userId) {
     const debtsThatUserIsOwed = allDebtsCalculated.filter(debt => debt.to === userId)
 
     //Calculate total
-    const totalYouOwe = debtsThatUserOwes.reduce((sum, debt) => sum + debt.amount, 0)
-    const totalOthersOwesYou = debtsThatUserIsOwed.reduce((sum, debt) => sum + debt.amount, 0)
-    const nettBalance = totalOthersOwesYou - totalYouOwe
+    const totalYouOwe = parseFloat(debtsThatUserOwes.reduce((sum, debt) => sum + debt.amount, 0))
+    const totalOthersOwesYou = parseFloat(debtsThatUserIsOwed.reduce((sum, debt) => sum + debt.amount, 0))
+    const nettBalance = parseFloat(totalOthersOwesYou - totalYouOwe)
 
 
     const youOwe = []
@@ -30,7 +30,7 @@ async function getUserBalanceSummary(userId) {
         youOwe.push({
             name: person.name,
             userId: debt.to,
-            amount: debt.amount
+            amount: parseFloat(debt.amount.toFixed(2))
         })
     }
 
@@ -40,7 +40,7 @@ async function getUserBalanceSummary(userId) {
         owesYou.push({
             name: person.name,
             userId: debt.from,
-            amount: debt.amount
+            amount: parseFloat(debt.amount.toFixed(2))
         })
     }
     return {

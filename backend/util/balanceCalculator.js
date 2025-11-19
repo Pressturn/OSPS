@@ -56,7 +56,7 @@ function calculateBalances(expenses) {
             outstandingBalance.push({
                 from: from,
                 to: to,
-                amount: debts[key]
+                amount: parseFloat(debts[key].toFixed(2))
             })
         }
     }

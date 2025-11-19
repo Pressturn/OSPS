@@ -9,7 +9,6 @@ const verifyToken = (req, res, next) => {
     }
 
     const tokenWithoutBearer = token.split(' ')[1]
-   'bearer rgh9e85tyghtieofafb'
 
     try {
         const decoded = jwt.verify(tokenWithoutBearer, process.env.JWT_SECRET)
