@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { signOut } from "../../services/authService"
+import { signOut } from "../../services/authService";
 import "./NavBar.css";
 
 const NavBar = () => {
   const handleSignOut = () => {
-    signOut()
-    window.location.href = "/";
+    signOut();
+    window.location.href = "/"; //go homepage after signing out
   };
 
   return (

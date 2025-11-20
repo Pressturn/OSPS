@@ -17,7 +17,7 @@ const api = axios.create({
 const getAllReceipts = async () => {
   try {
     const token = localStorage.getItem("token"); //saved JTW tokens for authorization
-    const response = await api.get("/receipts", {
+    const response = await api.get("/receipts", { //send a get response to backend fetch receipts include token authorisation, wait for backend respond, store respond in respondse
       headers: { Authorization: `Bearer ${token}` }
     });
     return response.data; //response contains all data from backend

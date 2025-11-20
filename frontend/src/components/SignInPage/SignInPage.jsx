@@ -3,7 +3,7 @@ import { signIn } from "../../services/authService"
 import { Link } from "react-router-dom"
 import "./SignInPage.css"
 
-function signInPage() {
+function SignInPage() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
@@ -53,4 +53,4 @@ function signInPage() {
     )
 }
 
-export default signInPage
+export default SignInPage
