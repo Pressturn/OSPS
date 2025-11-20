@@ -1,14 +1,14 @@
 //import the expense model
 const Expense = require("../models/expense");
-const { calculateBalances } = require("../util/balanceCalculator");
 const { getUserBalanceSummary } = require("../services/balanceSummary");
 
 //function to create new receipts
 exports.createReceipt = async (req, res) => {
   try {
+    //get the logged in user ID
     const userId = req.user.userId;
 
-    //create a new expense document in mongoDB
+    //create a new expense document in mongoDB, contain expense detail and paidby maually put in userid
     const newReceipt = await Expense.create({
       ...req.body,
       paidBy: userId,
@@ -26,25 +26,12 @@ exports.getAllReceipts = async (req, res) => {
   try {
     const userId = req.user.userId;
 
-    //searches mongoDB expense for all receipts that fulfill who paid by/ split between this user ID
+    //searches mongoDB expense for all receipts that is paid by userID or split between user ID
     const receipts = await Expense.find({
       $or: [{ paidBy: userId }, { "splitBetween.user": userId }],
     })
-      .populate("paidBy", "name") //get data on who paid
-      .populate("splitBetween.user", "name"); //who you split the receipt with
-
-    res.status(200).json(receipts);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-// DEBUG ONLY - Get ALL receipts (no filter)
-exports.getAllReceiptsDebug = async (req, res) => {
-  try {
-    const receipts = await Expense.find({})
-      .populate("paidBy", "name")
-      .populate("splitBetween.user", "name");
+      .populate("paidBy", "name") //populates data on who paid
+      .populate("splitBetween", "name"); //populates data on who you split the receipt with
 
     res.status(200).json(receipts);
   } catch (error) {
@@ -57,7 +44,7 @@ exports.getReceiptById = async (req, res) => {
   try {
     const userId = req.user.userId;
 
-    //from the id, in the DB find the name of who paid, who split with users
+    //from the url params id, in the DB find the name of who paid, who split with users
     const receipt = await Expense.findById(req.params.id)
       .populate("paidBy", "name")
       .populate({
@@ -73,7 +60,7 @@ exports.getReceiptById = async (req, res) => {
       return res.status(404).json({ error: "receipt not found" });
     }
 
-    //if you paid for the receipt, you can see the receipt
+    //if you paid for the receipt or splitbetween, you can see the receipt
     const canViewRecipt =
       receipt.paidBy._id.toString() === userId ||
       receipt.splitBetween.some(
@@ -117,8 +104,6 @@ exports.updateReceipt = async (req, res) => {
       const numberOfPeople = receipt.splitBetween.length;
       const splitAmount = newAmount / numberOfPeople;
 
-      console.log("Number of people:", numberOfPeople);
-      console.log("Split amount per person:", splitAmount);
 
       //update each person split amount with the new total amount /people
       const updatedSplitBetween = receipt.splitBetween.map((split) => ({
@@ -126,12 +111,8 @@ exports.updateReceipt = async (req, res) => {
         amount: splitAmount,
       }));
 
-      console.log("Updated splitBetween:", updatedSplitBetween);
-
       req.body.splitBetween = updatedSplitBetween;
     }
-
-    console.log("Final req.body before update:", req.body);
 
     //replace the old fields with new ones
     const updatedReceipt = await Expense.findByIdAndUpdate(
@@ -179,6 +160,7 @@ exports.deleteReceipt = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 exports.getBalanceSummary = async (req, res) => {
   try {
