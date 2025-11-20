@@ -16,7 +16,7 @@ const ReceiptForm = () => {
     amount: "",
   });
 
- 
+
 
   useEffect(() => {
     fetchReceipt();
@@ -91,52 +91,55 @@ const ReceiptForm = () => {
   };
 
   return (
-    <div className="receipt-form-container">
-      <h1>Edit Receipt</h1>
-      <p>Update your receipt details below</p>
-      {error && <div className="error-message">{error}</div>}
-      {successMessage && <div className="success-message">{successMessage}</div>} 
-      
-      <div className="receipt-form-card">
-      <form onSubmit={handleSubmit}>
-        {/* 
-Description of expense */}
-        <div className="form-group">
-          <label>Description</label>
-          <input
-            type="text"
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-            required
-          ></input>
-        </div>
-        {/* 
-Total amount */}
-        <div className="form-group">
-          <label> Total Amount ($) </label>
-          <input
-            type="number"
-            id="amount"
-            name="amount"
-            value={formData.amount}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+    <div className="page-container">
+      <div className="page-box">
+        <h1 className="page-title">Edit Receipt</h1>
+        <p className="page-subtitle">Update your receipt details below</p>
 
-        <div className="button-group">
-          <button className="submit-button" type="submit" disabled={loading}>
-            {loading ? "Updating..." : "Update Receipt"}
-          </button>
-          <button className="cancel-button" type="button" onClick={handleCancel} disabled={loading}>
-            Cancel
-          </button>
-        </div>
-      </form>
-      </div>
-    </div>
+        {error && <div className="error-message">{error}</div>}
+        {successMessage && <div className="success-message">{successMessage}</div>}
+
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            {/* 
+Description of expense */}
+            <label>Description</label>
+            <input
+              type="text"
+              className="form-input"
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              required
+            ></input>
+          </div>
+          {/* 
+Total amount */}
+          <div className="form-group">
+            <label> Total Amount ($) </label>
+            <input
+              type="number"
+              className="form-input"
+              id="amount"
+              name="amount"
+              value={formData.amount}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <div className="button-group">
+            <button className="btn-primary" type="submit" disabled={loading}>
+              {loading ? "Updating..." : "Update Receipt"}
+            </button>
+            <button className="btn-secondary" type="button" onClick={handleCancel} disabled={loading}>
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div >
+    </div >
   );
 };
 export default ReceiptForm;

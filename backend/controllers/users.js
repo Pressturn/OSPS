@@ -63,37 +63,11 @@ async function deleteUser(req, res) {
     }
 };
 
-async function getUserBalance(req, res) {
-    try {
-        const userId = req.params.id
-        const userFromDatabase = await User.findById(userId)
-
-        if (!userFromDatabase) {
-            return res.status(404).json({ error: 'User not found' })
-        }
-
-        const balanceSummary = await getUserBalanceSummary(userId)
-
-        res.json({
-            userId: userFromDatabase._id,
-            userName: userFromDatabase.name,
-            totalYouOwe: balanceSummary.totalYouOwe,
-            totalOthersOwesYou: balanceSummary.totalOthersOwesYou,
-            nettBalance: balanceSummary.nettBalance,
-            youOwe: balanceSummary.youOwe,
-            owesYou: balanceSummary.owesYou
-        })
-
-    } catch (error) {
-        res.status(500).json({ error: error.message })
-    }
-}
-
 module.exports = {
     createUser,
     getAllUsers,
     getSpecificUser,
     deleteUser,
     updateUser,
-    getUserBalance
+    
 }
