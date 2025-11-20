@@ -98,14 +98,14 @@ exports.updateReceipt = async (req, res) => {
         .json({ error: "Not authorised to update this receipt" });
     }
 
-
+// if im updating the total amount for the receipt, when theres change in amount 
     if (req.body.amount && req.body.amount != receipt.amount) {
-      const newAmount = req.body.amount;
+      const newAmount = req.body.amount; //save the updated amount to new variable
       const numberOfPeople = receipt.splitBetween.length;
-      const splitAmount = newAmount / numberOfPeople;
+      const splitAmount = newAmount / numberOfPeople; //what $ does each person pay
 
 
-      //update each person split amount with the new total amount /people
+      //update each person split amount with the new total amount /people, multiple users map through each of them
       const updatedSplitBetween = receipt.splitBetween.map((split) => ({
         user: split.user._id || split.user,
         amount: splitAmount,

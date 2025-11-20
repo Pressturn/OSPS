@@ -16,11 +16,11 @@ const api = axios.create({
 //get all the receipts created
 const getAllReceipts = async () => {
   try {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token"); //saved JTW tokens for authorization
     const response = await api.get("/receipts", {
       headers: { Authorization: `Bearer ${token}` }
     });
-    return response.data;
+    return response.data; //response contains all data from backend
   } catch (error) {
     console.error("Error fetching receipts", error);
     throw error;
