@@ -4,8 +4,8 @@ import { getReceiptById, updateReceipt } from "../../services/receiptService";
 import "./ReceiptForm.css";
 
 const ReceiptForm = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
+  const { id } = useParams(); //extract id from url slugs
+  const navigate = useNavigate(); //redirect users to other pages
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,30 +16,29 @@ const ReceiptForm = () => {
     amount: "",
   });
 
-
-
   useEffect(() => {
-    fetchReceipt();
+    fetchReceipt(); //fetches receipt data on load or when receipt ID changes
   }, [id]);
 
   const fetchReceipt = async () => {
     try {
-      setLoading(true);
+      setLoading(true); //show loading when 1st fetching data
       //fetch receipt by ID from mongoDB backend
       const receipt = await getReceiptById(id);
 
-      //FILL UP THE FORM WITH existing receipt data
+      //update state with existing receipt data
       setFormData({
         description: receipt.description || "",
         amount: receipt.amount || "",
       });
 
+      //clear all prev errors
       setError(null);
     } catch (err) {
       setError("failed to load receipt");
       console.error(err);
     } finally {
-      setLoading(false);
+      setLoading(false); //whether data fetch suceed or fail, show loading false
     }
   };
 

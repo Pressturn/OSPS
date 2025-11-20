@@ -41,7 +41,7 @@ const ReceiptDetail = () => {
         await deleteReceipt(receiptId);
         //go back to all receipts once success
         navigate("/receipts");
-      } catch (err) {
+      } catch {
         alert("failed to delete receipt");
       }
     }
