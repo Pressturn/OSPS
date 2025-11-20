@@ -180,24 +180,6 @@ exports.deleteReceipt = async (req, res) => {
   }
 };
 
-//test balance calculation
-exports.testBalance = async (req, res) => {
-  try {
-    //get all expense documents from mongoDB
-    const expenses = await Expense.find();
-    //function from util folder
-    const result = calculateBalances(expenses);
-
-    res.json({
-      message: "Balance calculation successful!",
-      totalExpenses: expenses.length,
-      debts: result,
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
 exports.getBalanceSummary = async (req, res) => {
   try {
     const userId = req.user.userId;

@@ -21,11 +21,6 @@ const userSchema = new mongoose.Schema({
         required: [true, "Enter your password"],
         trim: true
     },
-    
-    // balance: {
-    //     type: Number,
-    //     default: 0
-    // },
 
     friends: [{
         type: mongoose.Schema.Types.ObjectId,
