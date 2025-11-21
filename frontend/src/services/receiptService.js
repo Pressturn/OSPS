@@ -45,7 +45,7 @@ const getReceiptById = async (id) => {
 const updateReceipt = async (id, receiptData) => {
   try {
     const token = localStorage.getItem("token");
-    const response = await api.put(`/receipts/${id}`, receiptData, {
+    const response = await api.put(`/receipts/${id}`, receiptData, { //receipt data is the updated receipt information
       headers: { Authorization: `Bearer ${token}` }
     });
     return response.data;

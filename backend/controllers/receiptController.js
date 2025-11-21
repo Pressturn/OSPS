@@ -152,7 +152,7 @@ exports.deleteReceipt = async (req, res) => {
         .json({ error: "Not authorised to delete this receipt" });
     }
 
-    //delete the receipt
+    //delete the receipt, standard mongoose delete method
     await Expense.findByIdAndDelete(req.params.id);
 
     res.status(200).json({ message: "Receipt deleted succesfully" });
