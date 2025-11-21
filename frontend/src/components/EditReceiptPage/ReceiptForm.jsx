@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getReceiptById, updateReceipt } from "../../services/receiptService";
 import "./ReceiptForm.css";
@@ -16,11 +16,9 @@ const ReceiptForm = () => {
     amount: "",
   });
 
-  useEffect(() => {
-    fetchReceipt(); //fetches receipt data on load or when receipt ID changes
-  }, [id]);
-
-  const fetchReceipt = async () => {
+  //usecallback remembers function from before, eg. id=123, component re-renders, fetchreceipt same, useeffect sees no change in fetchreceipt, doesnt run, avoids infinite loop
+  // function RECREATED when id changes, otherwise return saved version from before
+  const fetchReceipt = useCallback(async () => {
     try {
       setLoading(true); //show loading when 1st fetching data
       //fetch receipt by ID from mongoDB backend
@@ -40,7 +38,11 @@ const ReceiptForm = () => {
     } finally {
       setLoading(false); //whether data fetch suceed or fail, show loading false
     }
-  };
+  }, [id]); // recreates function receipt id dependency changes
+
+  useEffect(() => {
+    fetchReceipt(); //fetchreceipt is executed
+  }, [fetchReceipt]); //only runs when fetchreceipt recreated
 
   const handleInputChange = (e) => {
     //update form with whatever user types in field
@@ -96,7 +98,9 @@ const ReceiptForm = () => {
         <p className="page-subtitle">Update your receipt details below</p>
 
         {error && <div className="error-message">{error}</div>}
-        {successMessage && <div className="success-message">{successMessage}</div>}
+        {successMessage && (
+          <div className="success-message">{successMessage}</div>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -132,13 +136,18 @@ Total amount */}
             <button className="btn-primary" type="submit" disabled={loading}>
               {loading ? "Updating..." : "Update Receipt"}
             </button>
-            <button className="btn-secondary" type="button" onClick={handleCancel} disabled={loading}>
+            <button
+              className="btn-secondary"
+              type="button"
+              onClick={handleCancel}
+              disabled={loading}
+            >
               Cancel
             </button>
           </div>
         </form>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 };
 export default ReceiptForm;

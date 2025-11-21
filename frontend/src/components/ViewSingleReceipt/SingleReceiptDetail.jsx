@@ -12,7 +12,7 @@ const ReceiptDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  //callback, function runs only when id changes
+  //callback: function rereated when id changes
   const fetchReceipt = useCallback(async () => {
     try {
       //show a loading message then fetch receipt data from backend
@@ -28,7 +28,7 @@ const ReceiptDetail = () => {
     }
   }, [id]);
 
-  //fetch the receipt when page loads and displays it
+  //fetch the receipt when page loads AND whenever id/fetchreceipt changes
   useEffect(() => {
     fetchReceipt();
   }, [fetchReceipt]);
