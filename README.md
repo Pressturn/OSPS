@@ -3,8 +3,9 @@
 
 OSPS is a web application that helps friends split expenses and track who owes money. Feature of the app are found below 
 
+- Web Link here: **(https://osps-zeta.vercel.app/)**
+  
 ## Screenshots
-
 ### Welcome page - Sign up and sign in options
 ![Welcome Page](assets/1.png)
 
