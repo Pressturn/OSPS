@@ -1,36 +1,46 @@
 
 function calculateBalances(expenses) {
-    const debts = {};
+    let debts = {};
     let balance = {};
 
+    // part 1
     expenses.forEach(expense => {
         expense.splitBetween.forEach(split => {
             const userId = split.user.toString();
-            const amountPaid = (userId === expense.paidBy.toString()) ? expense.amount : 0;
+
+            // who paid
+            const amountPaid = (userId === expense.paidBy.toString()) ?expense.amount : 0;
             const share = split.amount;
+
+             // If balance["you123"] exists → use that value
+            // If balance["you123"] is undefined → use 0; now key value exists
             balance[userId] = (balance[userId] || 0) + (amountPaid - share)
         })
 
     });
 
+    // returns array of all keys (userID)
+    // part 2
     const allUserIds = Object.keys(balance);
 
-    allUserIds.forEach(fromUser => {
-        if (balance[fromUser] < 0) {
+    allUserIds.forEach(userOwes => {
+
+        // who owes money
+        if (balance[userOwes] < 0) {
 
             allUserIds.forEach(toUser => {
                 if (balance[toUser] > 0) {
 
                     const settleAmount = Math.min(
-                        Math.abs(balance[fromUser]),
+                        Math.abs(balance[userOwes]),
                         Math.abs(balance[toUser])
                     );
 
-                    const debtKey = `${fromUser}-${toUser}`;
-                    const oppositeKey = `${toUser}-${fromUser}`;
+                    const debtKey = `${userOwes}-${toUser}`;
+                    const oppositeKey = `${toUser}-${userOwes}`;
 
                     if (debts[oppositeKey]) {
-                        debts[oppositeKey] -= settleAmount;
+                        debts[oppositeKey] = debts[oppositeKey] - settleAmount;
 
                         if (debts[oppositeKey] < 0) {
                             debts[debtKey] = Math.abs(debts[oppositeKey]);
@@ -41,13 +51,15 @@ function calculateBalances(expenses) {
                         debts[debtKey] = (debts[debtKey] || 0) + settleAmount;
                     }
 
-                    balance[fromUser] += settleAmount;
-                    balance[toUser] -= settleAmount;
+                // reset
+                    balance[userOwes] = balance[userOwes] + settleAmount;
+                    balance[toUser] =  balance[toUser] - settleAmount;
                 }
             })
         }
     });
 
+    // part 3
     const outstandingBalance = [];
 
     for (const key in debts) {

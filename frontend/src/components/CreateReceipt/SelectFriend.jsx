@@ -49,7 +49,6 @@ function SelectFriend() {
       setAddedUsers(newUser);
       setInput("");
 
-      // !!Would need to update
       navigate("/receipts/new/details", { state: { selectedFriends: newUser } });
     }
   }

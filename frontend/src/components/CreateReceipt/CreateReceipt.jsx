@@ -29,13 +29,11 @@ function CreateReceipt() {
     try {
       const currentUserId = localStorage.getItem("userId");
 
-      // Convert emails to user IDs for other users
       const otherUsers = addedUsers.map(email => {
         const user = allUsers.find(u => u.email === email);
         return { user: user._id, amount: parseFloat(split) };
       });
 
-      // Include yourself in the split
       const splitBetween = [
         ...otherUsers,
         { user: currentUserId, amount: parseFloat(split) }
@@ -53,21 +51,21 @@ function CreateReceipt() {
   };
 
   return (
-    <div className="page-container">
-      <div className="page-box">
+    <div>
+      <div>
         <button className="back-btn"
           onClick={() => navigate("/receipts/new")}>
           ← Back</button>
 
-        <h1 className="page-title">Add Expense</h1>
+        <h1>Add Expense</h1>
 
-        {/* Friends - Clickable to add more */}
+        {/* Friends */}
         <div className="friends-section"
           onClick={() => navigate("/receipts/new", { state: { existingFriends: addedUsers } })}>
           <label>With you and:</label>
           <div className="friends-list">
-            {addedUsers.map((email, i) => (
-              <span key={i} className="friend-name">
+            {addedUsers.map((email, index) => (
+              <span key={index} className="friend-name">
                 {getUserName(email)}, </span>
             ))}
             <span className="add-more-link">+ Add more</span>
@@ -79,20 +77,18 @@ function CreateReceipt() {
           <div>
             <input
               type="text"
-              className="form-input"
               placeholder="Enter a description"
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(event) => setDescription(event.target.value)}
               required
             />
 
             <label>SGD</label>
             <input
               type="number"
-              className="form-input"
               placeholder="0.00"
               value={amount}
-              onChange={(e) => setAmount(e.target.value)}
+              onChange={(event) => setAmount(event.target.value)}
               step="0.01"
               min="0"
               required
@@ -113,8 +109,8 @@ function CreateReceipt() {
                 <span>SGD {split}</span>
               </div>
 
-              {addedUsers.map((email, i) => (
-                <div key={i} className="split-item">
+              {addedUsers.map((email, index) => (
+                <div key={index} className="split-item">
                   <span>{getUserName(email)}</span>
                   <span>SGD {split}</span>
                 </div>
@@ -127,8 +123,7 @@ function CreateReceipt() {
             </div>
           )}
 
-          <button onClick={handleSubmit} className="btn-primary" 
-          disabled={!description || !amount}>
+          <button onClick={handleSubmit} disabled={!description || !amount}>
             Save
           </button>
         </form>
