@@ -5,7 +5,7 @@ const { getUserBalanceSummary } = require("../services/balanceSummary");
 //function to create new receipts
 exports.createReceipt = async (req, res) => {
   try {
-    //get the logged in user ID
+    //get the logged in user ID from the JWT token
     const userId = req.user.userId;
 
     //create a new expense document in mongoDB, contain expense detail and paidby maually put in userid
@@ -98,12 +98,11 @@ exports.updateReceipt = async (req, res) => {
         .json({ error: "Not authorised to update this receipt" });
     }
 
-// if im updating the total amount for the receipt, when theres change in amount 
+    // if im updating the total amount for the receipt, when theres change in amount
     if (req.body.amount && req.body.amount != receipt.amount) {
       const newAmount = req.body.amount; //save the updated amount to new variable
       const numberOfPeople = receipt.splitBetween.length;
       const splitAmount = newAmount / numberOfPeople; //what $ does each person pay
-
 
       //update each person split amount with the new total amount /people, multiple users map through each of them
       const updatedSplitBetween = receipt.splitBetween.map((split) => ({
@@ -152,7 +151,7 @@ exports.deleteReceipt = async (req, res) => {
         .json({ error: "Not authorised to delete this receipt" });
     }
 
-    //delete the receipt
+    //delete the receipt, standard mongoose delete method
     await Expense.findByIdAndDelete(req.params.id);
 
     res.status(200).json({ message: "Receipt deleted succesfully" });
@@ -160,7 +159,6 @@ exports.deleteReceipt = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 exports.getBalanceSummary = async (req, res) => {
   try {
