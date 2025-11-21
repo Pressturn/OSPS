@@ -6,28 +6,28 @@ OSPS is a web application that helps friends split expenses and track who owes m
 ## Screenshots
 
 ### Welcome page - Sign up and sign in options
-![Welcome Page](Assets/1.png)
+![Welcome Page](assets/1.png)
 
 ### Sign Up - Create a new account
-![Sign Up Page](Assets/2.png)
+![Sign Up Page](assets/2.png)
 
 ### Sign In - Log into your account 
-![Sign In Page](Assets/3.png)
+![Sign In Page](assets/3.png)
 
 ### Add Expense - Select friends to add expense
-![Add Expense Page](Assets/4.png)
+![Add Expense Page](assets/4.png)
 
 ### Features in Add Expense - Add in details of receipt and amount
-![Add Expense Feature Page](Assets/5.png)
+![Add Expense Feature Page](assets/5.png)
 
 ### All Receipts - View all your created receipts
-![All Receipts Page](Assets/6.png)
+![All Receipts Page](assets/6.png)
 
 ### Receipt Details - View all your created receipts
-![Receipt Details Page](Assets/7.png)
+![Receipt Details Page](assets/7.png)
 
 #### Balance Summary - Overall balance, who you owe and who owes you
-![Receipt Details Page](Assets/8.png)
+![Receipt Details Page](assets/8.png)
 
 ### Tech stacks
 - MERN Stack - MongoDB, Express, React, Node.js
@@ -37,12 +37,12 @@ OSPS is a web application that helps friends split expenses and track who owes m
 - Backend: Render
 - Database: MongoDB 
 
-# API Endpoints
-## Auth Routes
+## API Endpoints
+### Auth Routes
 - `POST /auth/signup` - Create New User
 - `POST /auth/signin` - Log into account
 
-## Receipt Routes
+### Receipt Routes
 - `POST /receipts` - Create new receipt
 - `GET /receipts` - Get all my receipts
 - `GET /receipts/:id` - Get a single receipt
@@ -50,7 +50,7 @@ OSPS is a web application that helps friends split expenses and track who owes m
 - `DELETE /receipts/:id` - Delete Receipt
 - `GET /receipts/balance` - Get balance summary
 
-## Users
+### Users
 - `GET /users` - Get all users when creating receipt
 
 ## Future Roadmap/Improvements

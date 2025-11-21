@@ -3,18 +3,16 @@ import { signUp } from "../../services/authService"
 import { Link } from "react-router-dom"
 import "./SignUpPage.css"
 
-function signUpPage() {
+function SignUpPage() {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
-    const [success, setSuccess] = useState("")
 
     const handleSubmit = async (event) => {
         event.preventDefault()
         try {
             await signUp(name, email, password)
-            setSuccess("Account created, directing to sign in")
             window.location.href = "/signin"
         } catch (error) {
             setError("Signup Failed. Email is in use")
@@ -66,4 +64,4 @@ function signUpPage() {
     )
 }
 
-export default signUpPage
+export default SignUpPage

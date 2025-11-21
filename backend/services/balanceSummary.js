@@ -14,7 +14,7 @@ async function getUserBalanceSummary(userId) {
     })
     const allDebtsCalculated = calculateBalances(allExpensesFromDatabase)
 
-    // Filter debts for this user
+    // Filter receipts of owes and owed for this user
     const debtsThatUserOwes = allDebtsCalculated.filter(debt => debt.from === userId)
     const debtsThatUserIsOwed = allDebtsCalculated.filter(debt => debt.to === userId)
 
@@ -29,7 +29,6 @@ async function getUserBalanceSummary(userId) {
         const person = await User.findById(debt.to).select('name')
         youOwe.push({
             name: person.name,
-            userId: debt.to,
             amount: parseFloat(debt.amount.toFixed(2))
         })
     }
@@ -39,7 +38,6 @@ async function getUserBalanceSummary(userId) {
         const person = await User.findById(debt.from).select('name')
         owesYou.push({
             name: person.name,
-            userId: debt.from,
             amount: parseFloat(debt.amount.toFixed(2))
         })
     }
