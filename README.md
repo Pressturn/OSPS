@@ -37,7 +37,7 @@ OSPS is a web application that helps friends split expenses and track who owes m
 - Backend: Render
 - Database: MongoDB 
 
-## API Endpoints
+# API Endpoints
 ## Auth Routes
 - `POST /auth/signup` - Create New User
 - `POST /auth/signin` - Log into account
