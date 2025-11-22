@@ -49,7 +49,7 @@ function SelectFriend() {
       setAddedUsers(newUser);
       setInput("");
 
-      navigate("/receipts/new/details", { state: { selectedFriends: newUser } });
+      navigate("/receipts/new/details", { state: {selectedFriends: newUser} });
     }
   }
 

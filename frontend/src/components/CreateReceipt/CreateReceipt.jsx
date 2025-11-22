@@ -19,7 +19,7 @@ function CreateReceipt() {
       .catch(error => console.log("Fail to fetch users:", error))
   }, [location]);
 
-  const getUserName = (email) => allUsers.find(user => user.email === email)?.name || email;
+  const getUserName = (email) => allUsers.find(user => user.email === email).name || email;
 
   const split = amount ? (parseFloat(amount) / (addedUsers.length + 1)).toFixed(2) : "0.00";
 
@@ -30,7 +30,7 @@ function CreateReceipt() {
       const currentUserId = localStorage.getItem("userId");
 
       const otherUsers = addedUsers.map(email => {
-        const user = allUsers.find(u => u.email === email);
+        const user = allUsers.find(user => user.email === email);
         return { user: user._id, amount: parseFloat(split) };
       });
 
